@@ -9,8 +9,6 @@ public class NormalQueue extends Queue{
     private String queueType;
 
     //Constructor
-
-
     public NormalQueue(ArrayList<Customer> listOfCustomers, int queueNumber, String queueType) {
         super(listOfCustomers);
         this.queueNumber = queueNumber;

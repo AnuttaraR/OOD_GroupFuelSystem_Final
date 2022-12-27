@@ -97,6 +97,9 @@ public class PetrolDispenseManager implements FuelDispenserManager{
             return true;
         }else {
             System.out.println("Oops! Fuel is out of stock");
+            stopFuelDispense();
+            restockFuel();
+            dispenseFuel(fuelAmount);
             return false;
         }
     }

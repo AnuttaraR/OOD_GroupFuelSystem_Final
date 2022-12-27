@@ -1,6 +1,7 @@
 package GasStationSystem;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Queue {
 
@@ -17,6 +18,16 @@ public class Queue {
     //Other methods
     public static int displayAvailablePositions(Queue queue){
         return (10 -queue.getListOfCustomers().size());
+    }
+
+    public static ArrayList<Customer> moveUpQueue(ArrayList<Customer> list){
+        for (int j = 0; j < 10; j++) {
+            if (j+1 != 10) {
+                list.set(j, list.get(j + 1));
+            }
+        }
+        list.remove(list.get(list.size()-1));
+        return list;
     }
 
     //Getters and Setters
