@@ -588,10 +588,23 @@ public class Driver {
             gasStationOwner.setDate(new DateTime(25,12,2022));
             gasStationOwner.displayTotalIncome();
 
-//            // The total fuel dispensed per vehicle category type per fuel type
-//            ArrayList<Customer> listOfPetrolCustomers = new ArrayList<>();
-//            listOfPetrolCustomers.add(petrolDispenser1.getListOfCustomers();
-
+           // The total fuel dispensed per vehicle category type per fuel type
+            ArrayList<Customer> petrolCustomers = new ArrayList<>();
+            petrolCustomers.addAll(petrolDispenser1.getListOfCustomers());
+            petrolCustomers.addAll(petrolDispenser2.getListOfCustomers());
+            petrolCustomers.addAll(petrolDispenser3.getListOfCustomers());
+            petrolCustomers.addAll(petrolDispenser4.getListOfCustomers());
+            System.out.println("petrol");
+            System.out.println(petrolCustomers);
+            gasStationOwner.dispensedFuelPerVehicleCatergory(petrolCustomers);
+            ArrayList<Customer> dieselCustomers = new ArrayList<>();
+            dieselCustomers.addAll(dieselDispenser1.getListOfCustomers());
+            dieselCustomers.addAll(dieselDispenser2.getListOfCustomers());
+            dieselCustomers.addAll(dieselDispenser3.getListOfCustomers());
+            System.out.println("diesel");
+            System.out.println(dieselCustomers);
+            gasStationOwner.dispensedFuelPerVehicleCatergory(dieselCustomers);
+            System.out.println();
             //total number of vehicles served by each dispenser along with the amounts of fuel
             System.out.println("Petrol dispenser 1: ");
             petrolDispenser1.displayingTotalFuelServedPerVehicleType();
