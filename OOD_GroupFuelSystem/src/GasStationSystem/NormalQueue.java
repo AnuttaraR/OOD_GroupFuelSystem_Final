@@ -1,5 +1,7 @@
 package GasStationSystem;
 
+import java.util.ArrayList;
+
 public class NormalQueue extends Queue{
 
     //Attributes
@@ -7,7 +9,12 @@ public class NormalQueue extends Queue{
     private String queueType;
 
     //Constructor
-    public NormalQueue() {
+
+
+    public NormalQueue(ArrayList<Customer> listOfCustomers, int queueNumber, String queueType) {
+        super(listOfCustomers);
+        this.queueNumber = queueNumber;
+        this.queueType = queueType;
     }
 
     //Getters and setters

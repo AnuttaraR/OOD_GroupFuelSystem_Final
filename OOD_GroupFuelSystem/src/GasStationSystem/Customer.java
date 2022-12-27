@@ -16,6 +16,12 @@ public class Customer {
         this.ticketId = ticketId;
         this.queue = queue;
     }
+
+    public Customer(String vehicleNumber, String vehicleType) {
+        this.vehicleNumber = vehicleNumber;
+        this.vehicleType = vehicleType;
+    }
+
     public Customer(){}
 
     //Other methods

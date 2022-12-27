@@ -13,14 +13,14 @@ public class DieselDispenseManager implements FuelDispenserManager{
     private DateTime date;
 
     //Association mapping
-    private static Repository repository;
+    private Repository repository;
     private ArrayList<Customer> listOfCustomers = new ArrayList<>();
     private ArrayList<String> listOfVehicleTypes = new ArrayList<>();
 
     //Constructors
-    public DieselDispenseManager(ArrayList<Customer> listOfCustomers, ArrayList<String> listOfVehicleTypes, boolean isDispensing, int dieselDispenseID, double amountDispensed, double income) {
+    public DieselDispenseManager(ArrayList<Customer> listOfCustomers, Repository repository, boolean isDispensing, int dieselDispenseID, double amountDispensed, double income) {
         this.listOfCustomers = listOfCustomers;
-        this.listOfVehicleTypes = listOfVehicleTypes;
+        this.repository = repository;
         this.isDispensing = isDispensing;
         this.dieselDispenseID = dieselDispenseID;
         this.amountDispensed = amountDispensed;

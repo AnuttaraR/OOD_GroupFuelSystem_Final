@@ -19,16 +19,17 @@ public class PetrolDispenseManager implements FuelDispenserManager{
     private ArrayList<String> listOfVehicleTypes = new ArrayList<>();
 
     //Constructors
-    public PetrolDispenseManager(ArrayList<Customer> listOfCustomers, ArrayList<String> listOfVehicleTypes, boolean isDispensing, int petrolDispenseID, double amountDispensed, double income) {
+    public PetrolDispenseManager(ArrayList<Customer> listOfCustomers, Repository repository,  boolean isDispensing, int petrolDispenseID, double amountDispensed, double income) {
         this.listOfCustomers = listOfCustomers;
-        this.listOfVehicleTypes = listOfVehicleTypes;
+        this.repository = repository;
         this.isDispensing = isDispensing;
         this.petrolDispenseID = petrolDispenseID;
         this.amountDispensed = amountDispensed;
         this.income = income;
     }
 
-    public PetrolDispenseManager(boolean isDispensing, int petrolDispenseID, double amountDispensed, double income) {
+    public PetrolDispenseManager(Repository repository, boolean isDispensing, int petrolDispenseID, double amountDispensed, double income) {
+        this.repository = repository;
         this.isDispensing = isDispensing;
         this.petrolDispenseID = petrolDispenseID;
         this.amountDispensed = amountDispensed;
