@@ -19,11 +19,10 @@ public class GasStationOwner {
     public GasStationOwner() {
     }
 
-    public GasStationOwner(ArrayList<DieselDispenseManager> listOfDieselDispensers, ArrayList<PetrolDispenseManager> listOfPetrolDispensers, double totalDieselIncome, double totalPetrolIncome) {
+    public GasStationOwner(ArrayList<DieselDispenseManager> listOfDieselDispensers, ArrayList<PetrolDispenseManager> listOfPetrolDispensers) {
         this.listOfDieselDispensers = listOfDieselDispensers;
         this.listOfPetrolDispensers = listOfPetrolDispensers;
-        this.totalDieselIncome = totalDieselIncome;
-        this.totalPetrolIncome = totalPetrolIncome;
+
     }
 
     //Other methods
@@ -79,6 +78,8 @@ public class GasStationOwner {
             System.out.println("Vehicle: "+customerWithLargestPetrolDispensed.getVehicleNumber());
         }
     }
+
+
 
     //Getters and setters
     public ArrayList<DieselDispenseManager> getListOfDieselDispensers() {

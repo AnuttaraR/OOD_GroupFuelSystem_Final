@@ -79,9 +79,10 @@ public class PetrolDispenseManager implements FuelDispenserManager{
     }
 
     //Displaying the total income per dispenser per day
-    public void displayingTotalIncome(double fuelAmount){
-        income = income+fuelAmount*priceForLitre;
-        System.out.println("Total income of this dispenser on "+date.toString()+" : LKR"+income);
+    public double displayingTotalIncome(){
+        income = income+this.amountDispensed*priceForLitre;
+//        System.out.println("Total income of this dispenser on "+date.toString()+" : LKR"+income);
+        return income;
     }
 
 
