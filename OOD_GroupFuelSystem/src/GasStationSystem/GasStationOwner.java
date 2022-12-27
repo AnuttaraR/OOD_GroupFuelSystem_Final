@@ -79,41 +79,33 @@ public class GasStationOwner {
         }
     }
 
-    public void dispensedFuelPerVehicleCatergory(ArrayList<Customer> listOfCustomers){
-        //initializing number of vehicles per category
-        int totalCars=0, totalVans=0, totalBikes=0, totalWheels=0, totalPublicTransportation=0, totalOthers = 0;
+    public void dispensedFuelPerVehicleCategory(ArrayList<Customer> listOfCustomers){
         //initializing total fuel served per vehicle category
         double totalFuelServedForCars = 0, totalFuelServedForVans =0, totalFuelServedForBikes=0, totalFuelServedForWheels=0, totalFuelServedForPublicTransportation=0, totalFuelServedForOthers= 0;
 
         //looping through the arraylist of customers to obtain the total fuel served per vehicle category
         for (Customer customer: listOfCustomers){
             if (customer.getVehicleType().equals("Car")){
-                totalCars =+ 1;
                 totalFuelServedForCars =+ customer.getFuelAmount();
             }else if (customer.getVehicleType().equals("Van")){
-                totalVans =+ 1;
                 totalFuelServedForVans =+ customer.getFuelAmount();
             }else if (customer.getVehicleType().equals("Motor Bikes")){
-                totalBikes =+ 1;
                 totalFuelServedForBikes =+ customer.getFuelAmount();
             }else if (customer.getVehicleType().equals("Three Wheel")){
-                totalWheels =+ 1;
                 totalFuelServedForWheels =+ customer.getFuelAmount();
             }else if (customer.getVehicleType().equals("Public Transportation")){
-                totalPublicTransportation =+ 1;
                 totalFuelServedForPublicTransportation =+ customer.getFuelAmount();
             }else {
-                totalOthers =+ 1;
                 totalFuelServedForOthers =+ customer.getFuelAmount();
             }
         }
         System.out.println("Total diesel issued per vehicle category");
-        System.out.println("Car category : Total Fuel: "+totalFuelServedForCars+" Total number of cars: "+totalCars);
-        System.out.println("Van category : Total Fuel: "+totalFuelServedForVans+" Total number of vans: "+totalVans);
-        System.out.println("Three Wheel category : Total Fuel: "+totalFuelServedForWheels+" Total number of vans: "+totalWheels);
-        System.out.println("Motor Bikes category : Total Fuel: "+totalFuelServedForBikes+" Total number of motor bikes: "+totalBikes);
-        System.out.println("Public transportation category : Total Fuel: "+totalFuelServedForPublicTransportation+" Total number of cars: "+totalPublicTransportation);
-        System.out.println("Other category : Total Fuel: "+totalFuelServedForOthers+" Total number of cars: "+totalOthers);
+        System.out.println("Car category : Total Fuel: "+totalFuelServedForCars);
+        System.out.println("Van category : Total Fuel: "+totalFuelServedForVans);
+        System.out.println("Three Wheel category : Total Fuel: "+totalFuelServedForWheels);
+        System.out.println("Motor Bikes category : Total Fuel: "+totalFuelServedForBikes);
+        System.out.println("Public transportation category : Total Fuel: "+totalFuelServedForPublicTransportation);
+        System.out.println("Other category : Total Fuel: "+totalFuelServedForOthers);
 
     }
 
