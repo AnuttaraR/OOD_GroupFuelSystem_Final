@@ -11,6 +11,10 @@ public class Driver {
         //Creating a scanner to get user inputs
         Scanner sc = new Scanner(System.in);
 
+        //Creating a Date
+        DateTime today = new DateTime(12,2,2022);
+
+        //Creating List of Customers of Respective Queues
         ArrayList<Customer> PetrolDisp1Customers = new ArrayList<>();
         ArrayList<Customer> PetrolDisp2Customers = new ArrayList<>();
         ArrayList<Customer> PetrolDisp3Customers = new ArrayList<>();
@@ -19,8 +23,6 @@ public class Driver {
         ArrayList<Customer> DieselDisp1Customers = new ArrayList<>();
         ArrayList<Customer> DieselDisp2Customers = new ArrayList<>();
         ArrayList<Customer> DieselDisp3Customers = new ArrayList<>();
-
-        ArrayList<String> listOfVehicleTypes = new ArrayList<>();
 
         //Creating repositories
         Repository petrolRepository = new Repository(25000, "Petrol");
@@ -46,6 +48,10 @@ public class Driver {
         NormalQueue dieselDispenserQueue2 = new NormalQueue(DieselDisp2Customers, 2, "Diesel");
         NormalQueue dieselDispenserQueue3 = new NormalQueue(DieselDisp3Customers, 3, "Diesel");
 
+        //Creating the Common Queue
+        CommonQueue commonQueue = new CommonQueue();
+        int commonCustomers = 0;
+
         //list of diesel dispensers and petrol dispensers
         ArrayList<DieselDispenseManager> dieselDispenseManagerArrayList = new ArrayList<>();
         dieselDispenseManagerArrayList.add(dieselDispenser1);
@@ -58,32 +64,33 @@ public class Driver {
         petrolDispenseManagerArrayList.add(petrolDispenser3);
         petrolDispenseManagerArrayList.add(petrolDispenser4);
 
+        //Creating the Gas Station
         GasStationOwner gasStationOwner = new GasStationOwner(dieselDispenseManagerArrayList, petrolDispenseManagerArrayList);
 
-        CommonQueue commonQueue = new CommonQueue();
-        int commonCustomers = 0;
-
         //Assuming there are already customers in the few queues we are creating existing customers and assigning them to queues.
-        List<Customer> petrolDispenserQueue1CustomersList = Arrays.asList(new Customer("0001", "Car", 1, petrolDispenserQueue1), new Customer("0002", "Van", 2, petrolDispenserQueue1), new Customer("0003", "Car", 3, petrolDispenserQueue1)
-                , new Customer("0004", "Car", 4, petrolDispenserQueue1), new Customer("0005", "Car", 5, petrolDispenserQueue1), new Customer("0006", "Car", 6, petrolDispenserQueue1),
-                new Customer("0007", "Van", 7, petrolDispenserQueue1), new Customer("0008", "Car", 8, petrolDispenserQueue1), new Customer("0009", "Car", 9, petrolDispenserQueue1), new Customer("0010", "Car", 10, petrolDispenserQueue1));
+        List<Customer> petrolDispenserQueue1CustomersList = Arrays.asList(new Customer("0001", "Car", 11, petrolDispenserQueue1), new Customer("0002", "Van", 22, petrolDispenserQueue1), new Customer("0003", "Car", 53, petrolDispenserQueue1)
+                , new Customer("0004", "Car", 44, petrolDispenserQueue1), new Customer("0005", "Car", 15, petrolDispenserQueue1), new Customer("0006", "Car", 86, petrolDispenserQueue1),
+                new Customer("0007", "Van", 7, petrolDispenserQueue1), new Customer("0008", "Car", 48, petrolDispenserQueue1), new Customer("0009", "Car", 9, petrolDispenserQueue1), new Customer("0010", "Car", 70, petrolDispenserQueue1));
+
+        List<Customer> petrolDispenserQueue2CustomersList = Arrays.asList(new Customer("0021", "Car", 56, petrolDispenserQueue2), new Customer("0022", "Other", 45, petrolDispenserQueue2), new Customer("0023", "Car", 35, petrolDispenserQueue2)
+                , new Customer("0024", "Other", 78, petrolDispenserQueue2), new Customer("0025", "Car", 69, petrolDispenserQueue2), new Customer("0026", "Van", 60, petrolDispenserQueue2),
+                new Customer("0026", "Van", 17, petrolDispenserQueue2), new Customer("0028", "Car", 68, petrolDispenserQueue2), new Customer("0029", "Car", 89, petrolDispenserQueue2), new Customer("0030", "Car", 27, petrolDispenserQueue2));
+
 
         petrolDispenserQueue1.setListOfCustomers(new ArrayList<>(petrolDispenserQueue1CustomersList));
-        petrolDispenserQueue2.setListOfCustomers(new ArrayList<>(petrolDispenserQueue1CustomersList));
+        petrolDispenserQueue2.setListOfCustomers(new ArrayList<>(petrolDispenserQueue2CustomersList));
 
         //Getting customer details and creating a customer object
-        System.out.println("Welcome to Gas and Service Station Colombo\n");
+        System.out.println("\n Welcome to Gas and Service Station Colombo\n");
 
         while (true) {
 
-
             //Getting user input to create a customer
-            System.out.println("Please enter your vehicle number: ");
+            System.out.println("\n Please enter your vehicle number: ");
             String vehicleNumber = sc.next();
 
             //Getting customer vehicle type to decide the queue
-            System.out.println("Please input your vehicle type \n 1.Car  2.Van  3.Motor Bike  4.Three wheel  5.Public transport  6.Other");
-
+            System.out.println("\n Please input your vehicle type \n 1.Car  2.Van  3.Motor Bike  4.Three wheel  5.Public transport  6.Other");
 
             int vehicleType = 0;
             while (true) {
@@ -93,10 +100,10 @@ public class Driver {
                     if (vehicleType <= 6 && vehicleType >= 1) {
                         break;
                     } else {
-                        System.out.println("Please enter a correct vehicle type number");
+                        System.out.println("\n Please enter a correct vehicle type number");
                     }
                 } catch (Exception e) {
-                    System.out.println("Error! Please enter a correct vehicle type number");
+                    System.out.println("\n Error! Please enter a correct vehicle type number");
                 }
             }
 
@@ -118,7 +125,7 @@ public class Driver {
             Customer customer = new Customer(vehicleNumber, typeOfVehicle);
 
             //Displaying all the queue positions
-            System.out.println("Petrol Queue 1 available number of positions: " + Queue.displayAvailablePositions(petrolDispenserQueue1));
+            System.out.println("\nPetrol Queue 1 available number of positions: " + Queue.displayAvailablePositions(petrolDispenserQueue1));
             System.out.println("Petrol Queue 2 available number of positions: " + Queue.displayAvailablePositions(petrolDispenserQueue2));
             System.out.println("Petrol Queue 3 available number of positions: " + Queue.displayAvailablePositions(petrolDispenserQueue3));
             System.out.println("Petrol Queue 4 available number of positions: " + Queue.displayAvailablePositions(petrolDispenserQueue4));
@@ -127,15 +134,14 @@ public class Driver {
             System.out.println("Diesel Queue 3 available number of positions: " + Queue.displayAvailablePositions(dieselDispenserQueue3));
 
 
-            System.out.println("You can join these queues");
+            System.out.println("\n You can join these queues");
 //      if the 1st queue, customer can join has available positions then he must join that queue
             if (vehicleType == 1 || vehicleType == 2) {
-//            System.out.println("Petrol Queue 1 available number of positions: "+Queue.displayAvailablePositions(petrolDispenserQueue1));
-//            System.out.println("Petrol Queue 2 available number of positions: "+Queue.displayAvailablePositions(petrolDispenserQueue2));
+
                 if (petrolDispenserQueue1.getListOfCustomers().size() == 10) {
                     if (petrolDispenserQueue2.getListOfCustomers().size() == 10) {
-                        System.out.println("Oops! There are no available positions in respective queues. Please join the common queue");
-                        System.out.println("Would you like to join the common queue? 1:Yes, 2:No\n");
+                        System.out.println("\n Oops! There are no available positions in respective queues. Please join the common queue");
+                        System.out.println("\n Would you like to join the common queue? 1:Yes, 2:No\n");
                         try {
                             int ans = sc.nextInt();
                             if (ans == 1) {
@@ -143,7 +149,6 @@ public class Driver {
                                 customer.setQueue(commonQueue);
                                 commonQueue.setNoOfCustomers(commonCustomers + 1);
                                 System.out.println("Successfully joined the common queue, thanks for your patience.");
-
 
 //                            Assigning the common queue customer to a normal queue
                                 Queue.moveUpQueue(petrolDispenserQueue2.getListOfCustomers());
