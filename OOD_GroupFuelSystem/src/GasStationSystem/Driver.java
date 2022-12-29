@@ -1,5 +1,7 @@
 package GasStationSystem;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.*;
 
 import static java.lang.System.exit;
