@@ -104,7 +104,7 @@ public class DieselDispenseManager implements FuelDispenserManager{
         }
 
         //Displaying total fuel served per vehicle category with number of vehicles
-        System.out.println("Total diesel issued per vehicle category");
+        System.out.println("\n----------Total diesel issued per vehicle category---------");
         System.out.println("Car category : Total Fuel: "+totalFuelServedForCars+" Total number of cars: "+totalCars);
         System.out.println("Van category : Total Fuel: "+totalFuelServedForVans+" Total number of vans: "+totalVans);
         System.out.println("Three Wheel category : Total Fuel: "+totalFuelServedForWheels+" Total number of vans: "+totalWheels);
@@ -115,9 +115,7 @@ public class DieselDispenseManager implements FuelDispenserManager{
 
     //Displaying the total income per dispenser per day
     public static void displayingTotalIncome(DieselDispenseManager dispenser, String table){
-//        income = income+this.amountDispensed*priceForLitre;
-        //System.out.println("Total income of this dispenser on "+date.toString()+" : LKR"+income);
-//        return income;
+
 
         String url = "jdbc:mysql://localhost:3306/gasstation_cw";
 

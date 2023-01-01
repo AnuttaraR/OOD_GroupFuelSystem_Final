@@ -31,11 +31,48 @@ public class Customer {
         this.fuelAmount = fuelAmount;
     }
 
-    public Customer(){}
 
     //Other methods
+
+    //This is to read from Tables that has Customer information of each Dispenser
+    public static void readDataFromCustomerTable(String table, ArrayList<Customer> customerList){
+        String url = "jdbc:mysql://localhost:3306/gasstation_cw";
+
+        String displayDataTable = "SELECT * FROM " + table;
+        try{
+            Connection connection = DriverManager.getConnection(url,"root","");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(displayDataTable);
+
+            while (resultSet.next()){
+                customerList.add(new Customer(resultSet.getString("vehicleNumber"),resultSet.getString("vehicleType"),resultSet.getDouble("fuelAmount")));
+            }
+        }catch(Exception e){
+            System.out.println("Error!");
+
+        }
+    }
+
+    public static void updateCustomerLists(Customer customer, String table){
+        String url = "jdbc:mysql://localhost:3306/gasstation_cw";
+
+        try {
+            Connection connection = DriverManager.getConnection(url, "root", "");
+            Statement statement = connection.createStatement();
+            String query = "INSERT INTO "+table+" (vehicleNumber, vehicleType, fuelAmount) VALUES (?,?,?)";
+            PreparedStatement newStatement = connection.prepareStatement(query);
+            newStatement.setString(1,customer.getVehicleNumber());
+            newStatement.setString(2,customer.getVehicleType());
+            newStatement.setDouble(3,customer.getFuelAmount());
+            newStatement.execute();
+        } catch (Exception e) {
+            System.out.println("Error!");
+        }
+
+    }
+    //Adding a customer to queue
     public static void joinQueue(Queue queue, Customer customer){
-        queue.addCustomer(customer); //Adding a customer to queue
+        queue.addCustomer(customer);
     }
 
     //Getters and setters
@@ -79,40 +116,5 @@ public class Customer {
         this.fuelAmount = fuelAmount;
     }
 
-    //This is to read from Tables that has Customer information of each Dispenser
-    public static void readDataFromDispenserTable(String table, ArrayList<Customer> customerList){
-        String url = "jdbc:mysql://localhost:3306/gasstation_cw";
 
-        String displayDataTable = "SELECT * FROM " + table;
-        try{
-            Connection connection = DriverManager.getConnection(url,"root","");
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(displayDataTable);
-
-            while (resultSet.next()){
-               customerList.add(new Customer(resultSet.getString("vehicleNumber"),resultSet.getString("vehicleType"),resultSet.getDouble("fuelAmount")));
-            }
-        }catch(Exception e){
-            System.out.println("Error!");
-
-        }
-    }
-
-    public static void updateCustomerLists(Customer customer, String table){
-        String url = "jdbc:mysql://localhost:3306/gasstation_cw";
-
-        try {
-            Connection connection = DriverManager.getConnection(url, "root", "");
-            Statement statement = connection.createStatement();
-            String query = "INSERT INTO "+table+" (vehicleNumber, vehicleType, fuelAmount) VALUES (?,?,?)";
-            PreparedStatement newStatement = connection.prepareStatement(query);
-            newStatement.setString(1,customer.getVehicleNumber());
-            newStatement.setString(2,customer.getVehicleType());
-            newStatement.setDouble(3,customer.getFuelAmount());
-            newStatement.execute();
-        } catch (Exception e) {
-            System.out.println("Error!");
-        }
-
-    }
 }

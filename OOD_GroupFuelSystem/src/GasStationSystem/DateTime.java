@@ -16,7 +16,7 @@ public class DateTime {
 
     //toString method
     public String toString(){
-        return ("Date[Day: "+this.day+" Month: "+this.month+" Year: "+this.year);
+        return ("Day: "+this.day+" Month: "+this.month+" Year: "+this.year);
     }
 
     //Getters and setters

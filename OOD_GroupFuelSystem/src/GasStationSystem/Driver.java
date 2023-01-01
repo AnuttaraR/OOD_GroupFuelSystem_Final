@@ -2,8 +2,6 @@ package GasStationSystem;
 
 import java.util.*;
 
-import static java.lang.System.exit;
-
 public class Driver {
     public static void main(String[] args) {
 
@@ -17,25 +15,25 @@ public class Driver {
 
         //Creating List of Customers of Respective Queues from the DataBase
         ArrayList<Customer> PetrolDisp1Customers = new ArrayList<>();
-        Customer.readDataFromDispenserTable("petrol_dispenser_1_customers",PetrolDisp1Customers);
+        Customer.readDataFromCustomerTable("petrol_dispenser_1_customers",PetrolDisp1Customers);
 
         ArrayList<Customer> PetrolDisp2Customers = new ArrayList<>();
-        Customer.readDataFromDispenserTable("petrol_dispenser_2_customers",PetrolDisp2Customers);
+        Customer.readDataFromCustomerTable("petrol_dispenser_2_customers",PetrolDisp2Customers);
 
         ArrayList<Customer> PetrolDisp3Customers = new ArrayList<>();
-        Customer.readDataFromDispenserTable("petrol_dispenser_3_customers",PetrolDisp3Customers);
+        Customer.readDataFromCustomerTable("petrol_dispenser_3_customers",PetrolDisp3Customers);
 
         ArrayList<Customer> PetrolDisp4Customers = new ArrayList<>();
-        Customer.readDataFromDispenserTable("petrol_dispenser_4_customers",PetrolDisp4Customers);
+        Customer.readDataFromCustomerTable("petrol_dispenser_4_customers",PetrolDisp4Customers);
 
         ArrayList<Customer> DieselDisp1Customers = new ArrayList<>();
-        Customer.readDataFromDispenserTable("diesel_dispenser_1_customers",DieselDisp1Customers);
+        Customer.readDataFromCustomerTable("diesel_dispenser_1_customers",DieselDisp1Customers);
 
         ArrayList<Customer> DieselDisp2Customers = new ArrayList<>();
-        Customer.readDataFromDispenserTable("diesel_dispenser_2_customers",DieselDisp2Customers);
+        Customer.readDataFromCustomerTable("diesel_dispenser_2_customers",DieselDisp2Customers);
 
         ArrayList<Customer> DieselDisp3Customers = new ArrayList<>();
-        Customer.readDataFromDispenserTable("diesel_dispenser_3_customers",DieselDisp3Customers);
+        Customer.readDataFromCustomerTable("diesel_dispenser_3_customers",DieselDisp3Customers);
 
 
         //Creating repositories
@@ -639,35 +637,22 @@ public class Driver {
 
 
         //Printing the statistics
-
-        //calculating the total income per dispenser
-        System.out.println("\nTotal income per dispenser");
-        System.out.println("\nPetrol Dispenser 1: ");
-        PetrolDispenseManager.displayingTotalIncome(petrolDispenser1, "petroldispenser_1");
-        System.out.println("\nPetrol Dispenser 2: ");
-        PetrolDispenseManager.displayingTotalIncome(petrolDispenser2, "petroldispenser_2");
-        System.out.println("\nPetrol Dispenser 3: ");
-        PetrolDispenseManager.displayingTotalIncome(petrolDispenser3, "petroldispenser_3");
-        System.out.println("\nPetrol Dispenser 4: ");
-        PetrolDispenseManager.displayingTotalIncome(petrolDispenser4, "petroldispenser_4");
-        System.out.println("\nDiesel Dispenser 1: ");
-        DieselDispenseManager.displayingTotalIncome(dieselDispenser1, "dieseldispenser_1");
-        System.out.println("\nDiesel Dispenser 2: ");
-        DieselDispenseManager.displayingTotalIncome(dieselDispenser2, "dieseldispenser_2");
-        System.out.println("\nDiesel Dispenser 3: ");
-        DieselDispenseManager.displayingTotalIncome(dieselDispenser3, "dieseldispenser_3");
-
-        // Displaying the Remaining stock at close of each repository
-        System.out.println("\nRemaining stock at close in petrol repository");
-        petrolRepository.displayingRemainingStock();
-        System.out.println("\nRemaining stock at close in diesel repository");
-        dieselRepository.displayingRemainingStock();
+        System.out.println("\n-------------------------PRINTING THE STATISTICS-------------------------");
 
         // Total income of the gas station per day per fuel type
+        System.out.println("\nTotal Income of the Gas Station Per Fuel Type\n");
         gasStationOwner.displayTotalIncome();
 
-       // The total fuel dispensed per vehicle category type per fuel type
-        System.out.println("\nThe total fuel dispensed per vehicle category type per fuel type");
+        // Displaying the Remaining stock at close of each repository
+        System.out.println("\n--Remaining Stock Per Fuel Type--");
+        System.out.println("Petrol Repository: "+petrolRepository.displayingRemainingStock());
+        System.out.println("Diesel Repository: "+dieselRepository.displayingRemainingStock());
+
+        // Displaying vehicle received the largest amount of fuel for the day and type of fuel received
+        gasStationOwner.displayingVehicleWithLargestFuelDispensed();
+
+        // The total fuel dispensed per vehicle category per fuel type
+        System.out.println("\nThe total fuel dispensed per vehicle category per fuel type");
         ArrayList<Customer> petrolCustomers = new ArrayList<>();
         petrolCustomers.addAll(petrolDispenser1.getListOfCustomers());
         petrolCustomers.addAll(petrolDispenser2.getListOfCustomers());
@@ -684,25 +669,59 @@ public class Driver {
         Repository.checkFuelDispensedPerVehicleCatergory(dieselCustomers);
         System.out.println();
 
+        //calculating the total income per dispenser AND
         //total number of vehicles served by each dispenser along with the amounts of fuel
-        System.out.println("\nPetrol dispenser 1: ");
+        System.out.println("\n----------------------DISPENSER STATISTICS----------------------------");
+        System.out.println("\nPetrol Dispenser 1: \n");
+        PetrolDispenseManager.displayingTotalIncome(petrolDispenser1, "petroldispenser_1");
         petrolDispenser1.displayingTotalFuelServedPerVehicleType();
-        System.out.println("\nPetrol dispenser 2: ");
+
+        System.out.println("\nPetrol Dispenser 2: ");
+        PetrolDispenseManager.displayingTotalIncome(petrolDispenser2, "petroldispenser_2");
         petrolDispenser2.displayingTotalFuelServedPerVehicleType();
-        System.out.println("\nPetrol dispenser 3: ");
+
+        System.out.println("\nPetrol Dispenser 3: ");
+        PetrolDispenseManager.displayingTotalIncome(petrolDispenser3, "petroldispenser_3");
         petrolDispenser3.displayingTotalFuelServedPerVehicleType();
-        System.out.println("\nPetrol dispenser 4: ");
+
+        System.out.println("\nPetrol Dispenser 4: ");
+        PetrolDispenseManager.displayingTotalIncome(petrolDispenser4, "petroldispenser_4");
         petrolDispenser4.displayingTotalFuelServedPerVehicleType();
-        System.out.println("\nDiesel dispenser 1: ");
+
+        System.out.println("\nDiesel Dispenser 1: ");
+        DieselDispenseManager.displayingTotalIncome(dieselDispenser1, "dieseldispenser_1");
         dieselDispenser1.displayingTotalFuelServedPerVehicleType();
-        System.out.println("\nDiesel dispenser 2: ");
+
+        System.out.println("\nDiesel Dispenser 2: ");
+        DieselDispenseManager.displayingTotalIncome(dieselDispenser2, "dieseldispenser_2");
         dieselDispenser2.displayingTotalFuelServedPerVehicleType();
-        System.out.println("\nDiesel dispenser 3: ");
+
+        System.out.println("\nDiesel Dispenser 3: ");
+        DieselDispenseManager.displayingTotalIncome(dieselDispenser3, "dieseldispenser_3");
         dieselDispenser3.displayingTotalFuelServedPerVehicleType();
 
-        // Displaying vehicle received the largest amount of fuel for the day and type of fuel received
-        System.out.println();
-        gasStationOwner.displayingVehicleWithLargestFuelDispensed();
+
+//        //total number of vehicles served by each dispenser along with the amounts of fuel
+//        System.out.println("\nPetrol dispenser 1: ");
+//        petrolDispenser1.displayingTotalFuelServedPerVehicleType();
+//
+//        System.out.println("\nPetrol dispenser 2: ");
+//        petrolDispenser2.displayingTotalFuelServedPerVehicleType();
+//
+//        System.out.println("\nPetrol dispenser 3: ");
+//        petrolDispenser3.displayingTotalFuelServedPerVehicleType();
+//
+//        System.out.println("\nPetrol dispenser 4: ");
+//        petrolDispenser4.displayingTotalFuelServedPerVehicleType();
+//
+//        System.out.println("\nDiesel dispenser 1: ");
+//        dieselDispenser1.displayingTotalFuelServedPerVehicleType();
+//
+//        System.out.println("\nDiesel dispenser 2: ");
+//        dieselDispenser2.displayingTotalFuelServedPerVehicleType();
+//        System.out.println("\nDiesel dispenser 3: ");
+//        dieselDispenser3.displayingTotalFuelServedPerVehicleType();
+
     }
 
 }

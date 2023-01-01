@@ -22,8 +22,8 @@ public class Repository {
     public Repository() {
     }
 
-    public void displayingRemainingStock(){
-        System.out.println("Remaining "+fuelType+" fuel stock: "+amountInRepository);
+    public double displayingRemainingStock(){
+       return amountInRepository;
     }
     //other methods
     public static void checkFuelDispensedPerVehicleCatergory(ArrayList<Customer> listOfCustomers){

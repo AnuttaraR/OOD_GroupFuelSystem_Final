@@ -107,7 +107,7 @@ public class PetrolDispenseManager implements FuelDispenserManager{
         }
 
         //Displaying total fuel served per vehicle category with number of vehicles
-        System.out.println("Total petrol issued per vehicle category");
+        System.out.println("\n--------------Total petrol issued per vehicle category------------\n");
         System.out.println("Car category : Total Fuel: "+totalFuelServedForCars+" Total number of cars: "+totalCars);
         System.out.println("Van category : Total Fuel: "+totalFuelServedForVans+" Total number of vans: "+totalVans);
         System.out.println("Three Wheel category : Total Fuel: "+totalFuelServedForWheels+" Total number of vans: "+totalWheels);

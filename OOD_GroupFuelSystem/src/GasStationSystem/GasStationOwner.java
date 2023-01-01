@@ -24,7 +24,6 @@ public class GasStationOwner {
         this.listOfDieselDispensers = listOfDieselDispensers;
         this.listOfPetrolDispensers = listOfPetrolDispensers;
         this.date = date;
-
     }
 
     //Other methods
@@ -43,7 +42,6 @@ public class GasStationOwner {
 
         String url = "jdbc:mysql://localhost:3306/gasstation_cw";
 
-
         try {
             Connection connection = DriverManager.getConnection(url, "root", "");
             Statement statement = connection.createStatement();
@@ -60,7 +58,6 @@ public class GasStationOwner {
         } catch (Exception e) {
             System.out.println("Error!");
         }
-
         System.out.println("The total Petrol income: "+getTotalPetrolIncome());
         System.out.println("The total Petrol fuel dispensed: "+getTotalPetrolDispensedAmount());
         System.out.println("The total diesel income: "+getTotalDieselIncome());
@@ -92,7 +89,7 @@ public class GasStationOwner {
 
         //Comparing the diesel and petrol the largest amounts and obtaining the customer with the largest fuel amount
         if (largestDieselFuelAmount>largestPetrolFuelAmount){
-            System.out.println("The vehicle with the largest amount of fuel received on "+date.toString());
+            System.out.println("\nThe vehicle with the largest amount of fuel received on "+date.toString());
             System.out.println("Fuel type: Diesel");
             System.out.println("Vehicle: "+customerWithLargestDieselDispensed.getVehicleNumber());
         }else {
@@ -102,35 +99,6 @@ public class GasStationOwner {
         }
     }
 
-    public void dispensedFuelPerVehicleCategory(ArrayList<Customer> listOfCustomers){
-        //initializing total fuel served per vehicle category
-        double totalFuelServedForCars = 0, totalFuelServedForVans =0, totalFuelServedForBikes=0, totalFuelServedForWheels=0, totalFuelServedForPublicTransportation=0, totalFuelServedForOthers= 0;
-
-        //looping through the arraylist of customers to obtain the total fuel served per vehicle category
-        for (Customer customer: listOfCustomers){
-            if (customer.getVehicleType().equals("Car")){
-                totalFuelServedForCars =+ customer.getFuelAmount();
-            }else if (customer.getVehicleType().equals("Van")){
-                totalFuelServedForVans =+ customer.getFuelAmount();
-            }else if (customer.getVehicleType().equals("Motor Bikes")){
-                totalFuelServedForBikes =+ customer.getFuelAmount();
-            }else if (customer.getVehicleType().equals("Three Wheel")){
-                totalFuelServedForWheels =+ customer.getFuelAmount();
-            }else if (customer.getVehicleType().equals("Public Transportation")){
-                totalFuelServedForPublicTransportation =+ customer.getFuelAmount();
-            }else {
-                totalFuelServedForOthers =+ customer.getFuelAmount();
-            }
-        }
-        System.out.println("Total diesel issued per vehicle category");
-        System.out.println("Car category : Total Fuel: "+totalFuelServedForCars);
-        System.out.println("Van category : Total Fuel: "+totalFuelServedForVans);
-        System.out.println("Three Wheel category : Total Fuel: "+totalFuelServedForWheels);
-        System.out.println("Motor Bikes category : Total Fuel: "+totalFuelServedForBikes);
-        System.out.println("Public transportation category : Total Fuel: "+totalFuelServedForPublicTransportation);
-        System.out.println("Other category : Total Fuel: "+totalFuelServedForOthers);
-
-    }
 
     //Getters and setters
     public ArrayList<DieselDispenseManager> getListOfDieselDispensers() {
