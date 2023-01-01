@@ -83,16 +83,15 @@ public class Driver {
         //Creating the Gas Station
         GasStationOwner gasStationOwner = new GasStationOwner(dieselDispenseManagerArrayList, petrolDispenseManagerArrayList);
 
-        //Assuming there are already customers in the few queues we are creating existing customers and assigning them to queues.
+        //Assigning the existing customers to dispensers
+        petrolDispenser1.setListOfCustomers(PetrolDisp1Customers);
+        petrolDispenser2.setListOfCustomers(PetrolDisp2Customers);
+        petrolDispenser3.setListOfCustomers(PetrolDisp3Customers);
+        petrolDispenser4.setListOfCustomers(PetrolDisp4Customers);
 
-        petrolDispenserQueue1.setListOfCustomers(PetrolDisp1Customers);
-        petrolDispenserQueue2.setListOfCustomers(PetrolDisp2Customers);
-        petrolDispenserQueue3.setListOfCustomers(PetrolDisp3Customers);
-        petrolDispenserQueue4.setListOfCustomers(PetrolDisp4Customers);
-
-        dieselDispenserQueue1.setListOfCustomers(DieselDisp1Customers);
-        dieselDispenserQueue2.setListOfCustomers(DieselDisp2Customers);
-        dieselDispenserQueue3.setListOfCustomers(DieselDisp3Customers);
+        dieselDispenser1.setListOfCustomers(DieselDisp1Customers);
+        dieselDispenser2.setListOfCustomers(DieselDisp2Customers);
+        dieselDispenser3.setListOfCustomers(DieselDisp3Customers);
 
         //Getting customer details and creating a customer object
         System.out.println("\n Welcome to Gas and Service Station Colombo\n");
