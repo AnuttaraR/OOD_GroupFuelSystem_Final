@@ -1,10 +1,7 @@
 package GasStationSystem;
 
+import java.sql.*;
 import java.util.ArrayList;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class PetrolDispenseManager implements FuelDispenserManager{
 
@@ -62,6 +59,22 @@ public class PetrolDispenseManager implements FuelDispenserManager{
             System.out.println("Error!");
         }
     }
+    public static void updateDispenserTables(PetrolDispenseManager dispenser, String table){
+        String url = "jdbc:mysql://localhost:3306/gasstation_cw";
+        try {
+            Connection connection = DriverManager.getConnection(url, "root", "");
+            Statement statement = connection.createStatement();
+            String query = "UPDATE " + table+
+                    " SET income = "+dispenser.getIncome()+", amountDispensed = " + dispenser.getAmountDispensed()+
+                    "WHERE date= "+dispenser.getDate().getDay()+" AND month= "+dispenser.getDate().getMonth()+";";
+            PreparedStatement newStatement = connection.prepareStatement(query);
+            newStatement.execute();
+
+            newStatement.execute();
+        } catch (Exception e) {
+            System.out.println("Error!");
+        }
+    }
 
     public void displayingTotalFuelServedPerVehicleType(){
 
@@ -73,23 +86,23 @@ public class PetrolDispenseManager implements FuelDispenserManager{
         //looping through the arraylist of customers to obtain the total fuel served per vehicle category
         for (Customer customer: listOfCustomers){
             if (customer.getVehicleType().equals("Car")){
-                totalCars =+ 1;
-                totalFuelServedForCars =+ customer.getFuelAmount();
+                totalCars += 1;
+                totalFuelServedForCars += customer.getFuelAmount();
             }else if (customer.getVehicleType().equals("Van")){
-                totalVans =+ 1;
-                totalFuelServedForVans =+ customer.getFuelAmount();
+                totalVans += 1;
+                totalFuelServedForVans += customer.getFuelAmount();
             }else if (customer.getVehicleType().equals("Motor Bikes")){
-                totalBikes =+ 1;
-                totalFuelServedForBikes =+ customer.getFuelAmount();
+                totalBikes += 1;
+                totalFuelServedForBikes += customer.getFuelAmount();
             }else if (customer.getVehicleType().equals("Three Wheel")){
-                totalWheels =+ 1;
-                totalFuelServedForWheels =+ customer.getFuelAmount();
+                totalWheels += 1;
+                totalFuelServedForWheels += customer.getFuelAmount();
             }else if (customer.getVehicleType().equals("Public Transportation")){
-                totalPublicTransportation =+ 1;
-                totalFuelServedForPublicTransportation =+ customer.getFuelAmount();
+                totalPublicTransportation += 1;
+                totalFuelServedForPublicTransportation += customer.getFuelAmount();
             }else {
-                totalOthers =+ 1;
-                totalFuelServedForOthers =+ customer.getFuelAmount();
+                totalOthers += 1;
+                totalFuelServedForOthers += customer.getFuelAmount();
             }
         }
 
@@ -104,12 +117,29 @@ public class PetrolDispenseManager implements FuelDispenserManager{
     }
 
     //Displaying the total income per dispenser per day
-    public double displayingTotalIncome(){
-        income = income+this.amountDispensed*priceForLitre;
-//        System.out.println("Total income of this dispenser on "+date.toString()+" : LKR"+income);
-        return income;
-    }
+    public static void displayingTotalIncome(PetrolDispenseManager dispenser, String table){
+//        income = income+this.amountDispensed*priceForLitre;
+        //System.out.println("Total income of this dispenser on "+date.toString()+" : LKR"+income);
+//        return income;
 
+        String url = "jdbc:mysql://localhost:3306/gasstation_cw";
+
+        String displayDataTable = "SELECT * FROM " + table;
+        try {
+            Connection connection = DriverManager.getConnection(url, "root", "");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(displayDataTable);
+
+            while (resultSet.next()) {
+                System.out.println("Date: "+resultSet.getInt("date")+"-"+resultSet.getInt("month")+"-"+resultSet.getInt("year"));
+                System.out.println("Dispenser Id: "+resultSet.getInt("dispenserId"));
+                System.out.println("Total fuel dispensed: "+resultSet.getDouble("amountDispensed"));
+                System.out.println("Total income: "+resultSet.getDouble("income"));
+            }
+        } catch (Exception e) {
+            System.out.println("Error!");
+        }
+    }
 
     //Overriding methods
 

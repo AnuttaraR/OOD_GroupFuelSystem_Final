@@ -1,9 +1,6 @@
 package GasStationSystem;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class Customer {
@@ -95,10 +92,27 @@ public class Customer {
             while (resultSet.next()){
                customerList.add(new Customer(resultSet.getString("vehicleNumber"),resultSet.getString("vehicleType"),resultSet.getDouble("fuelAmount")));
             }
-
         }catch(Exception e){
             System.out.println("Error!");
 
         }
+    }
+
+    public static void updateCustomerLists(Customer customer, String table){
+        String url = "jdbc:mysql://localhost:3306/gasstation_cw";
+
+        try {
+            Connection connection = DriverManager.getConnection(url, "root", "");
+            Statement statement = connection.createStatement();
+            String query = "INSERT INTO "+table+" (vehicleNumber, vehicleType, fuelAmount) VALUES (?,?,?)";
+            PreparedStatement newStatement = connection.prepareStatement(query);
+            newStatement.setString(1,customer.getVehicleNumber());
+            newStatement.setString(2,customer.getVehicleType());
+            newStatement.setDouble(3,customer.getFuelAmount());
+            newStatement.execute();
+        } catch (Exception e) {
+            System.out.println("Error!");
+        }
+
     }
 }

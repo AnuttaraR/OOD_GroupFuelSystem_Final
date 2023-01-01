@@ -1,5 +1,6 @@
 package GasStationSystem;
 
+import java.sql.*;
 import java.util.ArrayList;
 
 public class GasStationOwner {
@@ -19,9 +20,10 @@ public class GasStationOwner {
     public GasStationOwner() {
     }
 
-    public GasStationOwner(ArrayList<DieselDispenseManager> listOfDieselDispensers, ArrayList<PetrolDispenseManager> listOfPetrolDispensers) {
+    public GasStationOwner(ArrayList<DieselDispenseManager> listOfDieselDispensers, ArrayList<PetrolDispenseManager> listOfPetrolDispensers, DateTime date) {
         this.listOfDieselDispensers = listOfDieselDispensers;
         this.listOfPetrolDispensers = listOfPetrolDispensers;
+        this.date = date;
 
     }
 
@@ -39,9 +41,30 @@ public class GasStationOwner {
         totalDieselIncome = totalDieselDispensedAmount*DieselDispenseManager.getPriceForLitre();
         totalPetrolIncome = totalPetrolDispensedAmount*PetrolDispenseManager.getPriceForLitre();
 
-        //Displaying total income per day per fuel type
-        System.out.println("Total Diesel income on "+date.toString()+" : LKR"+totalDieselIncome);
-        System.out.println("Total Petrol income on "+date.toString()+" : LKR"+totalPetrolIncome);
+        String url = "jdbc:mysql://localhost:3306/gasstation_cw";
+
+
+        try {
+            Connection connection = DriverManager.getConnection(url, "root", "");
+            Statement statement = connection.createStatement();
+            String query = "UPDATE gas_station"+
+                    " SET totalDieselIncome = "+ getTotalDieselIncome()+", totalDieselDispensedAmount = " +getTotalDieselDispensedAmount()+
+                    " ,totalPetrolIncome = "+ getTotalPetrolIncome()+", totalPetrolDispensedAmount= " +getTotalPetrolDispensedAmount()+";"+
+                    "WHERE date= "+getDate().getDay()+" AND month= "+getDate().getMonth()+";";
+            PreparedStatement newStatement = connection.prepareStatement(query);
+            newStatement.setDouble(1, totalPetrolIncome);
+            newStatement.setDouble(2, totalPetrolDispensedAmount);
+            newStatement.setDouble(3, totalDieselIncome);
+            newStatement.setDouble(4, totalDieselDispensedAmount);
+            newStatement.execute();
+        } catch (Exception e) {
+            System.out.println("Error!");
+        }
+
+        System.out.println("The total Petrol income: "+getTotalPetrolIncome());
+        System.out.println("The total Petrol fuel dispensed: "+getTotalPetrolDispensedAmount());
+        System.out.println("The total diesel income: "+getTotalDieselIncome());
+        System.out.println("The total diesel fuel dispensed: "+getTotalDieselDispensedAmount());
     }
 
     public void displayingVehicleWithLargestFuelDispensed(){

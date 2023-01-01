@@ -8,11 +8,12 @@ public class Driver {
     public static void main(String[] args) {
 
         Random random = new Random();
+
         //Creating a scanner to get user inputs
         Scanner sc = new Scanner(System.in);
 
-        //Creating a Date
-        DateTime today = new DateTime(12,2,2022);
+        //Updating the date
+        DateTime today = new DateTime(1,1,2023);
 
         //Creating List of Customers of Respective Queues from the DataBase
         ArrayList<Customer> PetrolDisp1Customers = new ArrayList<>();
@@ -27,7 +28,6 @@ public class Driver {
         ArrayList<Customer> PetrolDisp4Customers = new ArrayList<>();
         Customer.readDataFromDispenserTable("petrol_dispenser_4_customers",PetrolDisp4Customers);
 
-
         ArrayList<Customer> DieselDisp1Customers = new ArrayList<>();
         Customer.readDataFromDispenserTable("diesel_dispenser_1_customers",DieselDisp1Customers);
 
@@ -39,37 +39,49 @@ public class Driver {
 
 
         //Creating repositories
-        Repository petrolRepository = new Repository(25000, "Petrol");
-        Repository dieselRepository = new Repository(25000, "Diesel");
+        Repository petrolRepository = new Repository();
+        Repository.readDataFromRepositoryTables("petrol_repository", petrolRepository);
+
+        Repository dieselRepository = new Repository();
+        Repository.readDataFromRepositoryTables("diesel_repository", dieselRepository);
+
 
         //Creating dispenser objects
         PetrolDispenseManager petrolDispenser1 = new PetrolDispenseManager();
         petrolDispenser1.setRepository(petrolRepository);
         PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_1", petrolDispenser1);
+        petrolDispenser1.setListOfCustomers(PetrolDisp1Customers);
 
         PetrolDispenseManager petrolDispenser2 = new PetrolDispenseManager();
         petrolDispenser2.setRepository(petrolRepository);
         PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_2", petrolDispenser2);
+        petrolDispenser2.setListOfCustomers(PetrolDisp2Customers);
 
         PetrolDispenseManager petrolDispenser3 = new PetrolDispenseManager();
         petrolDispenser3.setRepository(petrolRepository);
         PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_3", petrolDispenser3);
+        petrolDispenser3.setListOfCustomers(PetrolDisp3Customers);
 
         PetrolDispenseManager petrolDispenser4 = new PetrolDispenseManager();
         petrolDispenser4.setRepository(petrolRepository);
         PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_4", petrolDispenser4);
+        petrolDispenser4.setListOfCustomers(PetrolDisp4Customers);
 
         DieselDispenseManager dieselDispenser1 = new DieselDispenseManager();
         dieselDispenser1.setRepository(dieselRepository);
         DieselDispenseManager.readDataFromDieselDispenserTables("dieseldispenser_1", dieselDispenser1);
+        dieselDispenser1.setListOfCustomers(DieselDisp1Customers);
 
         DieselDispenseManager dieselDispenser2 = new DieselDispenseManager();
         dieselDispenser2.setRepository(dieselRepository);
         DieselDispenseManager.readDataFromDieselDispenserTables("dieseldispenser_1", dieselDispenser2);
+        dieselDispenser2.setListOfCustomers(DieselDisp2Customers);
 
         DieselDispenseManager dieselDispenser3 = new DieselDispenseManager();
         dieselDispenser3.setRepository(dieselRepository);
         DieselDispenseManager.readDataFromDieselDispenserTables("dieseldispenser_1", dieselDispenser3);
+        dieselDispenser3.setListOfCustomers(DieselDisp3Customers);
+
 
         //Creating queue objects
         NormalQueue petrolDispenserQueue1 = new NormalQueue(PetrolDisp1Customers, 1, "Petrol");
@@ -85,7 +97,8 @@ public class Driver {
         CommonQueue commonQueue = new CommonQueue();
         int commonCustomers = 0;
 
-        //list of diesel dispensers and petrol dispensers
+
+        //List of diesel dispensers and petrol dispensers
         ArrayList<DieselDispenseManager> dieselDispenseManagerArrayList = new ArrayList<>();
         dieselDispenseManagerArrayList.add(dieselDispenser1);
         dieselDispenseManagerArrayList.add(dieselDispenser2);
@@ -97,8 +110,10 @@ public class Driver {
         petrolDispenseManagerArrayList.add(petrolDispenser3);
         petrolDispenseManagerArrayList.add(petrolDispenser4);
 
+
         //Creating the Gas Station
-        GasStationOwner gasStationOwner = new GasStationOwner(dieselDispenseManagerArrayList, petrolDispenseManagerArrayList);
+        GasStationOwner gasStationOwner = new GasStationOwner(dieselDispenseManagerArrayList, petrolDispenseManagerArrayList, today);
+
 
         //Assigning the existing customers to dispensers
         petrolDispenser1.setListOfCustomers(PetrolDisp1Customers);
@@ -110,17 +125,17 @@ public class Driver {
         dieselDispenser2.setListOfCustomers(DieselDisp2Customers);
         dieselDispenser3.setListOfCustomers(DieselDisp3Customers);
 
+
         //Getting customer details and creating a customer object
         System.out.println("\n Welcome to Gas and Service Station Colombo\n");
 
         while (true) {
-
             //Getting user input to create a customer
-            System.out.println("\n Please enter your vehicle number: ");
+            System.out.println("\nPlease enter your vehicle number: ");
             String vehicleNumber = sc.next();
 
             //Getting customer vehicle type to decide the queue
-            System.out.println("\n Please input your vehicle type \n 1.Car  2.Van  3.Motor Bike  4.Three wheel  5.Public transport  6.Other");
+            System.out.println("\nPlease input your vehicle type \n 1.Car  2.Van  3.Motor Bike  4.Three wheel  5.Public transport  6.Other");
 
             int vehicleType = 0;
             while (true) {
@@ -130,10 +145,10 @@ public class Driver {
                     if (vehicleType <= 6 && vehicleType >= 1) {
                         break;
                     } else {
-                        System.out.println("\n Please enter a correct vehicle type number");
+                        System.out.println("\nPlease enter a correct vehicle type number");
                     }
                 } catch (Exception e) {
-                    System.out.println("\n Error! Please enter a correct vehicle type number");
+                    System.out.println("\nError! Please enter a correct vehicle type number");
                 }
             }
 
@@ -164,395 +179,398 @@ public class Driver {
             System.out.println("Diesel Queue 3 available number of positions: " + Queue.displayAvailablePositions(dieselDispenserQueue3));
 
 
-            System.out.println("\n You can join these queues");
+            System.out.println("\nYou can join these queues");
 //      if the 1st queue, customer can join has available positions then he must join that queue
             if (vehicleType == 1 || vehicleType == 2) {
-
-                if (petrolDispenserQueue1.getListOfCustomers().size() == 10) {
-                    if (petrolDispenserQueue2.getListOfCustomers().size() == 10) {
-                        System.out.println("\n Oops! There are no available positions in respective queues. Please join the common queue");
-                        System.out.println("\n Would you like to join the common queue? 1:Yes, 2:No\n");
+                if (petrolDispenserQueue1.getListOfCustomers().size() >= 10) {
+                    if (petrolDispenserQueue2.getListOfCustomers().size() >= 10) {
+                        System.out.println("\nOops! There are no available positions in respective queues. Please join the common queue");
+                        System.out.println("\nWould you like to join the common queue? 1:Yes, 2:No\n");
                         try {
                             int ans = sc.nextInt();
                             if (ans == 1) {
-                                commonQueue.addCustomer(customer);
+                                Customer.joinQueue(commonQueue, customer);
+//                                commonQueue.addCustomer(customer);
                                 customer.setQueue(commonQueue);
                                 commonQueue.setNoOfCustomers(commonCustomers + 1);
-                                System.out.println("Successfully joined the common queue, thanks for your patience.");
+                                System.out.println("\nSuccessfully joined the common queue, thanks for your patience.");
 
 //                            Assigning the common queue customer to a normal queue
                                 Queue.moveUpQueue(petrolDispenserQueue2.getListOfCustomers());
-                                petrolDispenserQueue2.getListOfCustomers().add(customer);
+//                                petrolDispenserQueue2.getListOfCustomers().add(customer);
+                                Customer.joinQueue(petrolDispenserQueue2, customer);
                                 petrolDispenser2.addCustomer(customer);
                                 customer.setQueue(petrolDispenserQueue2);
-                                System.out.println("Successfully joined the queue.");
+                                System.out.println("\nSuccessfully joined the petrol queue 2.");
                                 int ticketNo = random.nextInt(1, 100);
                                 customer.setTicketId(ticketNo);
-                                System.out.println("Your ticket Id is " + ticketNo);
+                                System.out.println("\nYour ticket Id is " + ticketNo);
 
                             } else if (ans == 2) {
-                                System.out.println("Thank you for using the fuel system, you may leave the queue now.");
-                                System.out.println("Next customer please");
+                                System.out.println("\nThank you for using the fuel system, you may leave the queue now.");
+                                System.out.println("\nNext customer please");
                                 continue;
-//                                System.exit(0);
                             }
                         } catch (Exception e) {
-                            System.out.println("Error!");
+                            System.out.println("\nError!");
                         }
                     } else {
-                        System.out.println("Petrol Queue 2 available number of positions: " + Queue.displayAvailablePositions(petrolDispenserQueue2));
-                        System.out.println("Would you like to join this queue? 1:Yes, 2:No\n");
+                        System.out.println("\nPetrol Queue 2 available number of positions: " + Queue.displayAvailablePositions(petrolDispenserQueue2));
+                        System.out.println("\nWould you like to join this queue? 1:Yes, 2:No\n");
                         try {
                             int ans = sc.nextInt();
                             if (ans == 1) {
                                 petrolDispenser2.addCustomer(customer);
-                                petrolDispenserQueue2.addCustomer(customer);
+                                Customer.joinQueue(petrolDispenserQueue2, customer);
+//                                petrolDispenserQueue2.addCustomer(customer);
                                 customer.setQueue(petrolDispenserQueue2);
-                                System.out.println("Successfully joined the queue.");
+                                System.out.println("\nSuccessfully joined the queue.");
                                 int ticketNo = random.nextInt(1, 10000);
                                 customer.setTicketId(ticketNo);
-                                System.out.println("Your ticket Id is " + ticketNo); //pass the ticket id
+                                System.out.println("\nYour ticket Id is " + ticketNo); //pass the ticket id
                             } else if (ans == 2) {
-                                System.out.println("Thank you for using the fuel system, you may leave the queue now.");
-                                System.out.println("Next customer please");
+                                System.out.println("\nThank you for using the fuel system, you may leave the queue now.");
+                                System.out.println("\nNext customer please");
                                 continue;
-//                                System.exit(0);
                             }
                         } catch (Exception e) {
-                            System.out.println("Error!");
+                            System.out.println("\nError!");
                         }
                     }
                 } else {
-                    System.out.println("Petrol Queue 1 available number of positions: " + Queue.displayAvailablePositions(petrolDispenserQueue1));
-                    System.out.println("Would you like to join this queue? 1:Yes, 2:No\n");
+                    System.out.println("\nPetrol Queue 1 available number of positions: " + Queue.displayAvailablePositions(petrolDispenserQueue1));
+                    System.out.println("\nWould you like to join this queue? 1:Yes, 2:No\n");
                     try {
                         int ans = sc.nextInt();
                         if (ans == 1) {
+                            Customer.joinQueue(petrolDispenserQueue1, customer);
                             petrolDispenser1.addCustomer(customer);
-                            petrolDispenserQueue1.addCustomer(customer);
+//                            petrolDispenserQueue1.addCustomer(customer);
                             customer.setQueue(petrolDispenserQueue1);
-                            System.out.println("Successfully joined the queue.");
+                            System.out.println("\nSuccessfully joined the queue.");
                             int ticketNo = random.nextInt(1, 10000);
                             customer.setTicketId(ticketNo);
-                            System.out.println("Your ticket Id is " + ticketNo); //pass the ticket id
+                            System.out.println("\nYour ticket Id is " + ticketNo); //pass the ticket id
                         } else if (ans == 2) {
-                            System.out.println("Thank you for using the fuel system, you may leave the queue now.");
-                            System.out.println("Next customer please");
+                            System.out.println("\nThank you for using the fuel system, you may leave the queue now.");
+                            System.out.println("\nNext customer please");
                             continue;
-//                            System.exit(0);
                         }
                     } catch (Exception e) {
-                        System.out.println("Error!");
+                        System.out.println("\nError!");
                     }
                 }
             } else if (vehicleType == 3) {
 //            System.out.println("Petrol Queue 4 available number of positions: "+Queue.displayAvailablePositions(petrolDispenserQueue4));
-                if (petrolDispenserQueue4.getListOfCustomers().size() == 10) {
-                    System.out.println("Oops! There are no available positions in respective queues. Please join the common queue");
-                    System.out.println("Would you like to join the common queue? 1:Yes, 2:No\n");
+                if (petrolDispenserQueue4.getListOfCustomers().size() >= 10) {
+                    System.out.println("\nOops! There are no available positions in respective queues. Please join the common queue");
+                    System.out.println("\nWould you like to join the common queue? 1:Yes, 2:No\n");
                     try {
                         int ans = sc.nextInt();
                         if (ans == 1) {
+                            Customer.joinQueue(commonQueue, customer);
                             commonQueue.addCustomer(customer);
-                            customer.setQueue(commonQueue);
+//                            customer.setQueue(commonQueue);
                             commonQueue.setNoOfCustomers(commonCustomers + 1);
-                            System.out.println("Successfully joined the common queue, thanks for your patience.");
-                            System.out.println("Next customer please");
+                            System.out.println("\nSuccessfully joined the common queue, thanks for your patience.");
+                            System.out.println("\nNext customer please");
 
                             //Assigning the common queue customer to a normal queue
                             Queue.moveUpQueue(petrolDispenserQueue4.getListOfCustomers());
                             petrolDispenserQueue4.getListOfCustomers().add(customer);
                             petrolDispenser4.addCustomer(customer);
                             customer.setQueue(petrolDispenserQueue4);
-                            System.out.println("Successfully joined the queue.");
+                            System.out.println("\nSuccessfully joined the petrol queue 4.");
                             int ticketNo = random.nextInt(1, 10090);
                             customer.setTicketId(ticketNo);
-                            System.out.println("Your ticket Id is " + ticketNo);
+                            System.out.println("\nYour ticket Id is " + ticketNo);
 
                         } else if (ans == 2) {
-                            System.out.println("Thank you for using the fuel system, you may leave the queue now.");
-                            System.out.println("Next customer please");
-//                            System.exit(0);
+                            System.out.println("\nThank you for using the fuel system, you may leave the queue now.");
+                            System.out.println("\nNext customer please");
                             continue;
                         }
                     } catch (Exception e) {
-                        System.out.println("Error!");
+                        System.out.println("\nError!");
                     }
                 } else {
-                    System.out.println("Petrol Queue 4 available number of positions: " + Queue.displayAvailablePositions(petrolDispenserQueue4));
-                    System.out.println("Would you like to join this queue? 1:Yes, 2:No\n");
+                    System.out.println("\nPetrol Queue 4 available number of positions: " + Queue.displayAvailablePositions(petrolDispenserQueue4));
+                    System.out.println("\nWould you like to join this queue? 1:Yes, 2:No\n");
                     try {
                         int ans = sc.nextInt();
                         if (ans == 1) {
                             petrolDispenser4.addCustomer(customer);
-                            petrolDispenserQueue4.addCustomer(customer);
+                            Customer.joinQueue(petrolDispenserQueue4, customer);
+//                            petrolDispenserQueue4.addCustomer(customer);
                             customer.setQueue(petrolDispenserQueue4);
-                            System.out.println("Successfully joined the queue.");
+                            System.out.println("\nSuccessfully joined the queue.");
                             int ticketNo = random.nextInt(1, 10000);
                             customer.setTicketId(ticketNo);
-                            System.out.println("Your ticket Id is " + ticketNo); //pass the ticket id
+                            System.out.println("\nYour ticket Id is " + ticketNo); //pass the ticket id
                         } else if (ans == 2) {
-                            System.out.println("Thank you for using the fuel system, you may leave the queue now.");
-                            System.out.println("Next customer please");
-//                            System.exit(0);
+                            System.out.println("\nThank you for using the fuel system, you may leave the queue now.");
+                            System.out.println("\nNext customer please");
                             continue;
                         }
                     } catch (Exception e) {
-                        System.out.println("Error!");
+                        System.out.println("\nError!");
                     }
                 }
             } else if (vehicleType == 4) {
 //            System.out.println("Petrol Queue 3 available number of positions: "+Queue.displayAvailablePositions(petrolDispenserQueue3));
-                if (petrolDispenserQueue3.getListOfCustomers().size() == 10) {
-                    System.out.println("Oops! There are no available positions in respective queues. Please join the common queue");
-                    System.out.println("Would you like to join the common queue? 1:Yes, 2:No\n");
+                if (petrolDispenserQueue3.getListOfCustomers().size() >= 10) {
+                    System.out.println("\nOops! There are no available positions in respective queues. Please join the common queue");
+                    System.out.println("\nWould you like to join the common queue? 1:Yes, 2:No\n");
                     try {
                         int ans = sc.nextInt();
                         if (ans == 1) {
-                            commonQueue.addCustomer(customer);
+                            Customer.joinQueue(commonQueue, customer);
+//                            commonQueue.addCustomer(customer);
                             customer.setQueue(commonQueue);
                             commonQueue.setNoOfCustomers(commonCustomers + 1);
-                            System.out.println("Successfully joined the common queue, thanks for your patience.");
+                            System.out.println("\nSuccessfully joined the common queue, thanks for your patience.");
 
                             //Assigning the common queue customer to a normal queue
                             Queue.moveUpQueue(petrolDispenserQueue3.getListOfCustomers());
-                            petrolDispenserQueue3.getListOfCustomers().add(customer);
+                            Customer.joinQueue(petrolDispenserQueue3, customer);
+//                            petrolDispenserQueue3.getListOfCustomers().add(customer);
                             petrolDispenser3.addCustomer(customer);
                             customer.setQueue(petrolDispenserQueue3);
-                            System.out.println("Successfully joined the queue.");
+                            System.out.println("\nSuccessfully joined the petrol queue 3.");
                             int ticketNo = random.nextInt(1, 34783);
                             customer.setTicketId(ticketNo);
-                            System.out.println("Your ticket Id is " + ticketNo);
+                            System.out.println("\nYour ticket Id is " + ticketNo);
 
                         } else if (ans == 2) {
-                            System.out.println("Thank you for using the fuel system, you may leave the queue now.");
-                            System.out.println("Next customer please");
-//                            System.exit(0);
+                            System.out.println("\nThank you for using the fuel system, you may leave the queue now.");
+                            System.out.println("\nNext customer please");
                             continue;
                         }
                     } catch (Exception e) {
-                        System.out.println("Error!");
+                        System.out.println("\nError!");
                     }
                 } else {
-                    System.out.println("Petrol Queue 3 available number of positions: " + Queue.displayAvailablePositions(petrolDispenserQueue3));
-                    System.out.println("Would you like to join this queue? 1:Yes, 2:No\n");
+                    System.out.println("\nPetrol Queue 3 available number of positions: " + Queue.displayAvailablePositions(petrolDispenserQueue3));
+                    System.out.println("\nWould you like to join this queue? 1:Yes, 2:No\n");
                     try {
                         int ans = sc.nextInt();
                         if (ans == 1) {
-                            petrolDispenser3.addCustomer(customer);
+                            Customer.joinQueue(petrolDispenserQueue3, customer);
+//                            petrolDispenser3.addCustomer(customer);
                             petrolDispenserQueue3.addCustomer(customer);
                             customer.setQueue(petrolDispenserQueue3);
-                            System.out.println("Successfully joined the queue.");
+                            System.out.println("\nSuccessfully joined the queue.");
                             int ticketNo = random.nextInt(1, 10000);
                             customer.setTicketId(ticketNo);
-                            System.out.println("Your ticket Id is " + ticketNo); //pass the ticket id
+                            System.out.println("\nYour ticket Id is " + ticketNo); //pass the ticket id
                         } else if (ans == 2) {
-                            System.out.println("Thank you for using the fuel system, you may leave the queue now.");
-                            System.out.println("Next customer please");
-//                            System.exit(0);
+                            System.out.println("\nThank you for using the fuel system, you may leave the queue now.");
+                            System.out.println("\nNext customer please");
                             continue;
                         }
                     } catch (Exception e) {
-                        System.out.println("Error!");
+                        System.out.println("\nError!");
                     }
                 }
             } else if (vehicleType == 5) {
 //            System.out.println("Diesel Queue 1 available number of position: "+Queue.displayAvailablePositions(dieselDispenserQueue1));
-                if (dieselDispenserQueue1.getListOfCustomers().size() == 10) {
-                    System.out.println("Oops! There are no available positions in respective queues. Please join the common queue");
-                    System.out.println("Would you like to join the common queue? 1:Yes, 2:No\n");
+                if (dieselDispenserQueue1.getListOfCustomers().size() >= 10) {
+                    System.out.println("\nOops! There are no available positions in respective queues. Please join the common queue");
+                    System.out.println("\nWould you like to join the common queue? 1:Yes, 2:No\n");
                     try {
                         int ans = sc.nextInt();
                         if (ans == 1) {
                             commonQueue.addCustomer(customer);
                             customer.setQueue(commonQueue);
                             commonQueue.setNoOfCustomers(commonCustomers + 1);
-                            System.out.println("Successfully joined the common queue, thanks for your patience.");
+                            System.out.println("\nSuccessfully joined the common queue, thanks for your patience.");
 
                             //Assigning the common queue customer to a normal queue
                             Queue.moveUpQueue(dieselDispenserQueue1.getListOfCustomers());
-                            dieselDispenserQueue1.getListOfCustomers().add(customer);
+                            Customer.joinQueue(dieselDispenserQueue1, customer);
+//                            dieselDispenserQueue1.getListOfCustomers().add(customer);
                             dieselDispenser1.addCustomer(customer);
                             customer.setQueue(dieselDispenserQueue1);
-                            System.out.println("Successfully joined the queue.");
+                            System.out.println("\nSuccessfully joined the diesel queue 1.");
                             int ticketNo = random.nextInt(1, 6000);
                             customer.setTicketId(ticketNo);
-                            System.out.println("Your ticket Id is " + ticketNo);
+                            System.out.println("\nYour ticket Id is " + ticketNo);
 
                         } else if (ans == 2) {
-                            System.out.println("Thank you for using the fuel system, you may leave the queue now.");
-                            System.out.println("Next customer please");
-//                            System.exit(0);
+                            System.out.println("\nThank you for using the fuel system, you may leave the queue now.");
+                            System.out.println("\nNext customer please");
                             continue;
                         }
                     } catch (Exception e) {
-                        System.out.println("Error!");
+                        System.out.println("\nError!");
                     }
                 } else {
-                    System.out.println("Diesel Queue 1 available number of positions: " + Queue.displayAvailablePositions(dieselDispenserQueue1));
-                    System.out.println("Would you like to join this queue? 1:Yes, 2:No\n");
+                    System.out.println("\nDiesel Queue 1 available number of positions: " + Queue.displayAvailablePositions(dieselDispenserQueue1));
+                    System.out.println("\nWould you like to join this queue? 1:Yes, 2:No\n");
                     try {
                         int ans = sc.nextInt();
                         if (ans == 1) {
                             dieselDispenser1.addCustomer(customer);
-                            dieselDispenserQueue1.addCustomer(customer);
+                            Customer.joinQueue(dieselDispenserQueue1, customer);
+//                            dieselDispenserQueue1.addCustomer(customer);
                             customer.setQueue(dieselDispenserQueue1);
-                            System.out.println("Successfully joined the queue.");
+                            System.out.println("\nSuccessfully joined the queue.");
                             int ticketNo = random.nextInt(1, 2000);
                             customer.setTicketId(ticketNo);
-                            System.out.println("Your ticket Id is " + ticketNo); //pass the ticket id
+                            System.out.println("\nYour ticket Id is " + ticketNo); //pass the ticket id
                         } else if (ans == 2) {
-                            System.out.println("Thank you for using the fuel system, you may leave the queue now.");
-                            System.out.println("Next customer please");
+                            System.out.println("\nThank you for using the fuel system, you may leave the queue now.");
+                            System.out.println("\nNext customer please");
                             continue;
-//                            System.exit(0);
                         }
                     } catch (Exception e) {
-                        System.out.println("Error!");
+                        System.out.println("\nError!");
                     }
                 }
             } else {
-                System.out.println("Please input fuel type \n1.Petrol  2.Diesel");
+                System.out.println("\nPlease input fuel type \n1.Petrol  2.Diesel");
                 int fuelType = sc.nextInt();
                 if (fuelType == 1) {
 //                System.out.println("Petrol Queue 2 available number of positions: "+Queue.displayAvailablePositions(petrolDispenserQueue2));
-                    if (petrolDispenserQueue2.getListOfCustomers().size() == 10) {
-                        System.out.println("Oops! There are no available positions in respective queues. Please join the common queue");
-                        System.out.println("Would you like to join the common queue? 1:Yes, 2:No\n");
+                    if (petrolDispenserQueue2.getListOfCustomers().size() >= 10) {
+                        System.out.println("\nOops! There are no available positions in respective queues. Please join the common queue");
+                        System.out.println("\nWould you like to join the common queue? 1:Yes, 2:No\n");
                         try {
                             int ans = sc.nextInt();
                             if (ans == 1) {
-                                commonQueue.addCustomer(customer);
+//                                commonQueue.addCustomer(customer);
+                                Customer.joinQueue(commonQueue, customer);
                                 customer.setQueue(commonQueue);
                                 commonQueue.setNoOfCustomers(commonCustomers + 1);
-                                System.out.println("Successfully joined the common queue, thanks for your patience.");
+                                System.out.println("\nSuccessfully joined the common queue, thanks for your patience.");
 
                                 //Assigning the common queue customer to a normal queue
                                 Queue.moveUpQueue(petrolDispenserQueue2.getListOfCustomers());
-                                petrolDispenserQueue2.getListOfCustomers().add(customer);
-                                petrolDispenserQueue2.addCustomer(customer);
+//                                petrolDispenserQueue2.getListOfCustomers().add(customer);
+                                Customer.joinQueue(petrolDispenserQueue2, customer);
+                                petrolDispenser2.addCustomer(customer);
                                 customer.setQueue(petrolDispenserQueue2);
-                                System.out.println("Successfully joined the queue.");
+                                System.out.println("\nSuccessfully joined the petrol queue 2.");
                                 int ticketNo = random.nextInt(1, 6000);
                                 customer.setTicketId(ticketNo);
-                                System.out.println("Your ticket Id is " + ticketNo);
+                                System.out.println("\nYour ticket Id is " + ticketNo);
 
                             } else if (ans == 2) {
-                                System.out.println("Thank you for using the fuel system, you may leave the queue now.");
-                                System.out.println("Next customer please");
+                                System.out.println("\nThank you for using the fuel system, you may leave the queue now.");
+                                System.out.println("\nNext customer please");
                                 continue;
-//                                System.exit(0);
                             }
                         } catch (Exception e) {
-                            System.out.println("Error!");
+                            System.out.println("\nError!");
                         }
                     } else {
-                        System.out.println("Petrol Queue 2 available number of positions: " + Queue.displayAvailablePositions(petrolDispenserQueue2));
-                        System.out.println("Would you like to join this queue? 1:Yes, 2:No\n");
+                        System.out.println("\nPetrol Queue 2 available number of positions: " + Queue.displayAvailablePositions(petrolDispenserQueue2));
+                        System.out.println("\nWould you like to join this queue? 1:Yes, 2:No\n");
                         try {
                             int ans = sc.nextInt();
                             if (ans == 1) {
                                 petrolDispenser2.addCustomer(customer);
-                                petrolDispenserQueue2.addCustomer(customer);
+                                Customer.joinQueue(petrolDispenserQueue2, customer);
+//                                petrolDispenserQueue2.addCustomer(customer);
                                 customer.setQueue(petrolDispenserQueue2);
-                                System.out.println("Successfully joined the queue.");
+                                System.out.println("\nSuccessfully joined the queue.");
                                 int ticketNo = random.nextInt(1, 50000);
                                 customer.setTicketId(ticketNo);
-                                System.out.println("Your ticket Id is " + ticketNo); //pass the ticket id
+                                System.out.println("\nYour ticket Id is " + ticketNo); //pass the ticket id
                             } else if (ans == 2) {
-                                System.out.println("Thank you for using the fuel system, you may leave the queue now.");
-                                System.out.println("Next customer please");
+                                System.out.println("\nThank you for using the fuel system, you may leave the queue now.");
+                                System.out.println("\nNext customer please");
                                 continue;
-//                                System.exit(0);
                             }
                         } catch (Exception e) {
-                            System.out.println("Error!");
+                            System.out.println("\nError!");
                         }
                     }
                 } else if (vehicleType == 6) {
 //                System.out.println("Diesel Queue 2 available number of position: " + Queue.displayAvailablePositions(dieselDispenserQueue2));
 //                System.out.println("Diesel Queue 3 available number of position: " + Queue.displayAvailablePositions(dieselDispenserQueue3));
-                    if (dieselDispenserQueue2.getListOfCustomers().size() == 10) {
-                        if (dieselDispenserQueue3.getListOfCustomers().size() == 10) {
-                            System.out.println("Oops! There are no available positions in respective queues. Please join the common queue");
-                            System.out.println("Would you like to join the common queue? 1:Yes, 2:No\n");
+                    if (dieselDispenserQueue2.getListOfCustomers().size() >= 10) {
+                        if (dieselDispenserQueue3.getListOfCustomers().size() >= 10) {
+                            System.out.println("\nOops! There are no available positions in respective queues. Please join the common queue");
+                            System.out.println("\nWould you like to join the common queue? 1:Yes, 2:No\n");
                             try {
                                 int ans = sc.nextInt();
                                 if (ans == 1) {
-                                    commonQueue.addCustomer(customer);
+//                                    commonQueue.addCustomer(customer);
+                                    Customer.joinQueue(commonQueue, customer);
                                     customer.setQueue(commonQueue);
                                     commonQueue.setNoOfCustomers(commonCustomers + 1);
-                                    System.out.println("Successfully joined the common queue, thanks for your patience.");
+                                    System.out.println("\nSuccessfully joined the common queue, thanks for your patience.");
 
                                     //Assigning the common queue customer to a normal queue
                                     dieselDispenserQueue3.getListOfCustomers().remove(0);
-                                    dieselDispenserQueue3.getListOfCustomers().add(customer);
+//                                    dieselDispenserQueue3.getListOfCustomers().add(customer);
+                                    Customer.joinQueue(dieselDispenserQueue3, customer);
                                     dieselDispenser3.addCustomer(customer);
                                     customer.setQueue(dieselDispenserQueue3);
-                                    System.out.println("Successfully joined the queue.");
+                                    System.out.println("\nSuccessfully joined the diesel queue 3.");
                                     int ticketNo = random.nextInt(154, 4500);
                                     customer.setTicketId(ticketNo);
-                                    System.out.println("Your ticket Id is " + ticketNo);
+                                    System.out.println("\nYour ticket Id is " + ticketNo);
 
                                 } else if (ans == 2) {
-                                    System.out.println("Thank you for using the fuel system, you may leave the queue now.");
-                                    System.out.println("Next customer please");
+                                    System.out.println("\nThank you for using the fuel system, you may leave the queue now.");
+                                    System.out.println("\nNext customer please");
                                     continue;
-                                    //System.exit(0);
                                 }
                             } catch (Exception e) {
-                                System.out.println("Error!");
+                                System.out.println("\nError!");
                             }
                         } else {
-                            System.out.println("Diesel Queue 3 available number of positions: " + Queue.displayAvailablePositions(dieselDispenserQueue3));
-                            System.out.println("Would you like to join this queue? 1:Yes, 2:No\n");
+                            System.out.println("\nDiesel Queue 3 available number of positions: " + Queue.displayAvailablePositions(dieselDispenserQueue3));
+                            System.out.println("\nWould you like to join this queue? 1:Yes, 2:No\n");
                             try {
                                 int ans = sc.nextInt();
                                 if (ans == 1) {
                                     dieselDispenser3.addCustomer(customer);
-                                    dieselDispenserQueue3.addCustomer(customer);
+//                                    dieselDispenserQueue3.addCustomer(customer);
+                                    Customer.joinQueue(dieselDispenserQueue3, customer);
                                     customer.setQueue(dieselDispenserQueue3);
-                                    System.out.println("Successfully joined the queue.");
+                                    System.out.println("\nSuccessfully joined the queue.");
                                     int ticketNo = random.nextInt(1, 10000);
                                     customer.setTicketId(ticketNo);
-                                    System.out.println("Your ticket Id is " + ticketNo); //pass the ticket id
+                                    System.out.println("\nYour ticket Id is " + ticketNo); //pass the ticket id
                                 } else if (ans == 2) {
-                                    System.out.println("Thank you for using the fuel system, you may leave the queue now.");
-                                    System.out.println("Next customer please");
+                                    System.out.println("\nThank you for using the fuel system, you may leave the queue now.");
+                                    System.out.println("\nNext customer please");
                                     continue;
-//                                    System.exit(0);
                                 }
                             } catch (Exception e) {
-                                System.out.println("Error!");
+                                System.out.println("\nError!");
                             }
                         }
                     } else {
-                        System.out.println("Diesel Queue 2 available number of positions: " + Queue.displayAvailablePositions(dieselDispenserQueue2));
-                        System.out.println("Would you like to join this queue? 1:Yes, 2:No\n");
+                        System.out.println("\nDiesel Queue 2 available number of positions: " + Queue.displayAvailablePositions(dieselDispenserQueue2));
+                        System.out.println("\nWould you like to join this queue? 1:Yes, 2:No\n");
                         try {
                             int ans = sc.nextInt();
                             if (ans == 1) {
                                 dieselDispenser2.addCustomer(customer);
-                                dieselDispenserQueue2.addCustomer(customer);
+                                Customer.joinQueue(dieselDispenserQueue2, customer);
+//                                dieselDispenserQueue2.addCustomer(customer);
                                 customer.setQueue(dieselDispenserQueue2);
-                                System.out.println("Successfully joined the queue.");
+                                System.out.println("\nSuccessfully joined the queue.");
                                 int ticketNo = random.nextInt(1, 100);
                                 customer.setTicketId(ticketNo);
-                                System.out.println("Your ticket Id is " + ticketNo); //pass the ticket id
+                                System.out.println("\nYour ticket Id is " + ticketNo); //pass the ticket id
                             } else if (ans == 2) {
-                                System.out.println("Thank you for using the fuel system, you may leave the queue now.");
-                                System.out.println("Next customer please");
+                                System.out.println("\nThank you for using the fuel system, you may leave the queue now.");
+                                System.out.println("\nNext customer please");
                                 continue;
-//                                System.exit(0);
                             }
                         } catch (Exception e) {
-                            System.out.println("Error!");
+                            System.out.println("\nError!");
                         }
                     }
                 }
             }
 
-            System.out.println("Enter the fuel amount: ");
+            System.out.println("\nEnter the fuel amount: ");
             double fuelAmount;
             while (true) {
                 String fuel = sc.next();
@@ -560,31 +578,38 @@ public class Driver {
                     fuelAmount = Double.parseDouble(fuel);
                     break;
                 } catch (Exception e) {
-                    System.out.println("Error! Please enter a correct fuel amount");
+                    System.out.println("\nError! Please enter a correct fuel amount");
                 }
             }
 
 //        Issuing fuel
             customer.setFuelAmount(fuelAmount);
             if (customer.getQueue() == petrolDispenserQueue1) {
+                Customer.updateCustomerLists(customer, "petrol_dispenser_1_customers");
                 petrolDispenser1.dispenseFuel(fuelAmount);
             } else if (customer.getQueue() == petrolDispenserQueue2) {
+                Customer.updateCustomerLists(customer, "petrol_dispenser_2_customers");
                 petrolDispenser2.dispenseFuel(fuelAmount);
             } else if (customer.getQueue() == petrolDispenserQueue3) {
+                Customer.updateCustomerLists(customer, "petrol_dispenser_3_customers");
                 petrolDispenser3.dispenseFuel(fuelAmount);
             } else if (customer.getQueue() == petrolDispenserQueue4) {
+                Customer.updateCustomerLists(customer, "petrol_dispenser_4_customers");
                 petrolDispenser4.dispenseFuel(fuelAmount);
             } else if (customer.getQueue() == dieselDispenserQueue1) {
+                Customer.updateCustomerLists(customer, "diesel_dispenser_1_customers");
                 dieselDispenser1.dispenseFuel(fuelAmount);
             } else if (customer.getQueue() == dieselDispenserQueue2) {
+                Customer.updateCustomerLists(customer, "diesel_dispenser_2_customers");
                 dieselDispenser2.dispenseFuel(fuelAmount);
             } else if (customer.getQueue() == dieselDispenserQueue3) {
+                Customer.updateCustomerLists(customer, "diesel_dispenser_3_customers");
                 dieselDispenser3.dispenseFuel(fuelAmount);
             }
             //Removing customer
             customer.getQueue().removeCustomer(customer);
-            System.out.println("Customer removed from queue successfully");
-            System.out.println("For next customer enter 1 else if u want to exit enter 2:");
+            System.out.println("\nCustomer removed from queue successfully");
+            System.out.println("\nFor next customer enter 1 else if u want to exit enter 2:");
             int userInput1 = 0;
             while (true) {
                 String userInput = sc.next();
@@ -593,59 +618,74 @@ public class Driver {
                     if (userInput1 == 1 || userInput1 == 2) {
                         break;
                     } else {
-                        System.out.println("Please enter a valid input");
+                        System.out.println("\nPlease enter a valid input");
                     }
                 } catch (Exception e) {
-                    System.out.println("Error! Please enter a valid input");
+                    System.out.println("\nError! Please enter a valid input");
                 }
             }
             if (userInput1 == 2) {
                 break;
             }
         }
+        // Updating the database/writing to database
+        PetrolDispenseManager.updateDispenserTables(petrolDispenser1, "petroldispenser_1");
+        PetrolDispenseManager.updateDispenserTables(petrolDispenser2, "petroldispenser_2");
+        PetrolDispenseManager.updateDispenserTables(petrolDispenser3, "petroldispenser_3");
+        PetrolDispenseManager.updateDispenserTables(petrolDispenser4, "petroldispenser_4");
+        DieselDispenseManager.updateDispenserTables(dieselDispenser1, "dieseldispenser_1");
+        DieselDispenseManager.updateDispenserTables(dieselDispenser2, "dieseldispenser_2");
+        DieselDispenseManager.updateDispenserTables(dieselDispenser3, "dieseldispenser_3");
+
+
         //Printing the statistics
+
         //calculating the total income per dispenser
-        System.out.println("Total income per dispenser");
-        System.out.println("Petrol Dispenser 1: " + petrolDispenser1.displayingTotalIncome());
-        System.out.println("Petrol Dispenser 2: " + petrolDispenser2.displayingTotalIncome());
-        System.out.println("Petrol Dispenser 3: " + petrolDispenser3.displayingTotalIncome());
-        System.out.println("Petrol Dispenser 4: " + petrolDispenser4.displayingTotalIncome());
-        System.out.println("Diesel Dispenser 1: " + dieselDispenser1.displayingTotalIncome());
-        System.out.println("Diesel Dispenser 2: " + dieselDispenser2.displayingTotalIncome());
-        System.out.println("Diesel Dispenser 3: " + dieselDispenser3.displayingTotalIncome());
+        System.out.println("\nTotal income per dispenser");
+        System.out.println("\nPetrol Dispenser 1: ");
+        PetrolDispenseManager.displayingTotalIncome(petrolDispenser1, "petroldispenser_1");
+        System.out.println("\nPetrol Dispenser 2: ");
+        PetrolDispenseManager.displayingTotalIncome(petrolDispenser2, "petroldispenser_2");
+        System.out.println("\nPetrol Dispenser 3: ");
+        PetrolDispenseManager.displayingTotalIncome(petrolDispenser3, "petroldispenser_3");
+        System.out.println("\nPetrol Dispenser 4: ");
+        PetrolDispenseManager.displayingTotalIncome(petrolDispenser4, "petroldispenser_4");
+        System.out.println("\nDiesel Dispenser 1: ");
+        DieselDispenseManager.displayingTotalIncome(dieselDispenser1, "dieseldispenser_1");
+        System.out.println("\nDiesel Dispenser 2: ");
+        DieselDispenseManager.displayingTotalIncome(dieselDispenser2, "dieseldispenser_2");
+        System.out.println("\nDiesel Dispenser 3: ");
+        DieselDispenseManager.displayingTotalIncome(dieselDispenser3, "dieseldispenser_3");
 
         // Displaying the Remaining stock at close of each repository
-        System.out.println("Remaining stock at close in petrol repository");
+        System.out.println("\nRemaining stock at close in petrol repository");
         petrolRepository.displayingRemainingStock();
-        System.out.println("Remaining stock at close in diesel repository");
+        System.out.println("\nRemaining stock at close in diesel repository");
         dieselRepository.displayingRemainingStock();
 
         // Total income of the gas station per day per fuel type
-        gasStationOwner.setDate(new DateTime(25,12,2022));
         gasStationOwner.displayTotalIncome();
 
        // The total fuel dispensed per vehicle category type per fuel type
-
-        System.out.println("The total fuel dispensed per vehicle category type per fuel type");
+        System.out.println("\nThe total fuel dispensed per vehicle category type per fuel type");
         ArrayList<Customer> petrolCustomers = new ArrayList<>();
         petrolCustomers.addAll(petrolDispenser1.getListOfCustomers());
         petrolCustomers.addAll(petrolDispenser2.getListOfCustomers());
         petrolCustomers.addAll(petrolDispenser3.getListOfCustomers());
         petrolCustomers.addAll(petrolDispenser4.getListOfCustomers());
-        System.out.println("\nPetrol");
-        System.out.println(petrolCustomers);
-        gasStationOwner.dispensedFuelPerVehicleCategory(petrolCustomers);
+        System.out.println("\nPetrol:");
+        Repository.checkFuelDispensedPerVehicleCatergory(petrolCustomers);
+
         ArrayList<Customer> dieselCustomers = new ArrayList<>();
         dieselCustomers.addAll(dieselDispenser1.getListOfCustomers());
         dieselCustomers.addAll(dieselDispenser2.getListOfCustomers());
         dieselCustomers.addAll(dieselDispenser3.getListOfCustomers());
-        System.out.println("\nDiesel");
-        System.out.println(dieselCustomers);
-        gasStationOwner.dispensedFuelPerVehicleCategory(dieselCustomers);
+        System.out.println("\nDiesel:");
+        Repository.checkFuelDispensedPerVehicleCatergory(dieselCustomers);
         System.out.println();
 
         //total number of vehicles served by each dispenser along with the amounts of fuel
-        System.out.println("Petrol dispenser 1: ");
+        System.out.println("\nPetrol dispenser 1: ");
         petrolDispenser1.displayingTotalFuelServedPerVehicleType();
         System.out.println("\nPetrol dispenser 2: ");
         petrolDispenser2.displayingTotalFuelServedPerVehicleType();
@@ -663,10 +703,6 @@ public class Driver {
         // Displaying vehicle received the largest amount of fuel for the day and type of fuel received
         System.out.println();
         gasStationOwner.displayingVehicleWithLargestFuelDispensed();
-
-        System.out.println("");
-
-
     }
 
 }
