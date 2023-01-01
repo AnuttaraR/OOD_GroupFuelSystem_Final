@@ -45,14 +45,21 @@ public class Driver {
         Repository dieselRepository = new Repository(25000, "Diesel");
 
         //Creating dispenser objects
-        PetrolDispenseManager petrolDispenser1 = new PetrolDispenseManager(PetrolDisp1Customers, petrolRepository, true, 1, 0.0, 0.0);
-        PetrolDispenseManager petrolDispenser2 = new PetrolDispenseManager(PetrolDisp2Customers, petrolRepository, true, 2, 0.0, 0.0);
-        PetrolDispenseManager petrolDispenser3 = new PetrolDispenseManager(PetrolDisp3Customers, petrolRepository, true, 3, 0.0, 0.0);
-        PetrolDispenseManager petrolDispenser4 = new PetrolDispenseManager(PetrolDisp4Customers, petrolRepository, true, 4, 0.0, 0.0);
+        PetrolDispenseManager petrolDispenser1 = new PetrolDispenseManager();
+        PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_1", petrolDispenser1);
+        PetrolDispenseManager petrolDispenser2 = new PetrolDispenseManager();
+        PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_2", petrolDispenser2);
+        PetrolDispenseManager petrolDispenser3 = new PetrolDispenseManager();
+        PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_3", petrolDispenser3);
+        PetrolDispenseManager petrolDispenser4 = new PetrolDispenseManager();
+        PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_4", petrolDispenser4);
 
-        DieselDispenseManager dieselDispenser1 = new DieselDispenseManager(DieselDisp1Customers, dieselRepository, true, 1, 0.0, 0.0);
-        DieselDispenseManager dieselDispenser2 = new DieselDispenseManager(DieselDisp2Customers, dieselRepository, true, 2, 0.0, 0.0);
-        DieselDispenseManager dieselDispenser3 = new DieselDispenseManager(DieselDisp3Customers, dieselRepository, true, 3, 0.0, 0.0);
+        DieselDispenseManager dieselDispenser1 = new DieselDispenseManager();
+        DieselDispenseManager.readDataFromDieselDispenserTables("dieseldispenser_1", dieselDispenser1);
+        DieselDispenseManager dieselDispenser2 = new DieselDispenseManager();
+        DieselDispenseManager.readDataFromDieselDispenserTables("dieseldispenser_1", dieselDispenser2);
+        DieselDispenseManager dieselDispenser3 = new DieselDispenseManager();
+        DieselDispenseManager.readDataFromDieselDispenserTables("dieseldispenser_1", dieselDispenser3);
 
         //Creating queue objects
         NormalQueue petrolDispenserQueue1 = new NormalQueue(PetrolDisp1Customers, 1, "Petrol");

@@ -1,7 +1,10 @@
 package GasStationSystem;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class PetrolDispenseManager implements FuelDispenserManager{
 
@@ -37,6 +40,28 @@ public class PetrolDispenseManager implements FuelDispenserManager{
     }
 
     public PetrolDispenseManager(){}
+
+    //This is to read from Tables that has Dispenser Data
+    public static void readDataFromPetrolDispenserTables(String table, PetrolDispenseManager dispenser) {
+        String url = "jdbc:mysql://localhost:3306/gasstation_cw";
+
+        String displayDataTable = "SELECT * FROM " + table;
+        try {
+            Connection connection = DriverManager.getConnection(url, "root", "");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(displayDataTable);
+
+            while (resultSet.next()) {
+                dispenser.setPetrolDispenseID(resultSet.getInt("dispenserId"));
+                dispenser.setAmountDispensed(resultSet.getDouble("amountDispensed"));
+                dispenser.setIncome(resultSet.getDouble("income"));
+                dispenser.setDate(new DateTime(resultSet.getInt("date"), resultSet.getInt("month"), resultSet.getInt("year")));
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error!");
+        }
+    }
 
     public void displayingTotalFuelServedPerVehicleType(){
 
@@ -98,9 +123,9 @@ public class PetrolDispenseManager implements FuelDispenserManager{
             return true;
         }else {
             System.out.println("Oops! Fuel is out of stock");
-            stopFuelDispense();
+            isDispensing =false;
+            System.out.println("Please wait, The Fuel is being Re-stocked!");
             restockFuel();
-            dispenseFuel(fuelAmount);
             return false;
         }
     }
