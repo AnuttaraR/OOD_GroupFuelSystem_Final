@@ -1,5 +1,11 @@
 package GasStationSystem;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
 public class Customer {
 
     //Attributes
@@ -20,6 +26,12 @@ public class Customer {
     public Customer(String vehicleNumber, String vehicleType) {
         this.vehicleNumber = vehicleNumber;
         this.vehicleType = vehicleType;
+    }
+
+    public Customer(String vehicleNumber, String vehicleType, double fuelAmount) {
+        this.vehicleNumber = vehicleNumber;
+        this.vehicleType = vehicleType;
+        this.fuelAmount = fuelAmount;
     }
 
     public Customer(){}
@@ -68,5 +80,25 @@ public class Customer {
 
     public void setFuelAmount(double fuelAmount) {
         this.fuelAmount = fuelAmount;
+    }
+
+    public static void readDataFromDispenserTable(String table, ArrayList<Customer> customerList){ //This is to read from Tables that has Customer information of each Dispenser
+        String url = "jdbc:mysql://localhost:3306/gasstation_cw";
+
+        String displayDataTable = "SELECT * FROM " + table;
+        try{
+            Connection connection = DriverManager.getConnection(url,"root","");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(displayDataTable);
+
+            while (resultSet.next()){
+               customerList.add(new Customer(resultSet.getString("vehicleNumber"),resultSet.getString("vehicleType"),resultSet.getDouble("fuelAmount")));
+            }
+
+        }catch(Exception e){
+            System.out.println("Error!");
+
+        }
+
     }
 }

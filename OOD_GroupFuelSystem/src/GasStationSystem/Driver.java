@@ -16,15 +16,29 @@ public class Driver {
         //Creating a Date
         DateTime today = new DateTime(12,2,2022);
 
-        //Creating List of Customers of Respective Queues
+        //Creating List of Customers of Respective Queues from the DataBase
         ArrayList<Customer> PetrolDisp1Customers = new ArrayList<>();
+        Customer.readDataFromDispenserTable("petrol_dispenser_1_customers",PetrolDisp1Customers);
+
         ArrayList<Customer> PetrolDisp2Customers = new ArrayList<>();
+        Customer.readDataFromDispenserTable("petrol_dispenser_2_customers",PetrolDisp2Customers);
+
         ArrayList<Customer> PetrolDisp3Customers = new ArrayList<>();
+        Customer.readDataFromDispenserTable("petrol_dispenser_3_customers",PetrolDisp3Customers);
+
         ArrayList<Customer> PetrolDisp4Customers = new ArrayList<>();
+        Customer.readDataFromDispenserTable("petrol_dispenser_4_customers",PetrolDisp4Customers);
+
 
         ArrayList<Customer> DieselDisp1Customers = new ArrayList<>();
+        Customer.readDataFromDispenserTable("diesel_dispenser_1_customers",DieselDisp1Customers);
+
         ArrayList<Customer> DieselDisp2Customers = new ArrayList<>();
+        Customer.readDataFromDispenserTable("diesel_dispenser_2_customers",DieselDisp2Customers);
+
         ArrayList<Customer> DieselDisp3Customers = new ArrayList<>();
+        Customer.readDataFromDispenserTable("diesel_dispenser_3_customers",DieselDisp3Customers);
+
 
         //Creating repositories
         Repository petrolRepository = new Repository(25000, "Petrol");
@@ -70,17 +84,15 @@ public class Driver {
         GasStationOwner gasStationOwner = new GasStationOwner(dieselDispenseManagerArrayList, petrolDispenseManagerArrayList);
 
         //Assuming there are already customers in the few queues we are creating existing customers and assigning them to queues.
-        List<Customer> petrolDispenserQueue1CustomersList = Arrays.asList(new Customer("0001", "Car", 11, petrolDispenserQueue1), new Customer("0002", "Van", 22, petrolDispenserQueue1), new Customer("0003", "Car", 53, petrolDispenserQueue1)
-                , new Customer("0004", "Car", 44, petrolDispenserQueue1), new Customer("0005", "Car", 15, petrolDispenserQueue1), new Customer("0006", "Car", 86, petrolDispenserQueue1),
-                new Customer("0007", "Van", 7, petrolDispenserQueue1), new Customer("0008", "Car", 48, petrolDispenserQueue1), new Customer("0009", "Car", 9, petrolDispenserQueue1), new Customer("0010", "Car", 70, petrolDispenserQueue1));
 
-        List<Customer> petrolDispenserQueue2CustomersList = Arrays.asList(new Customer("0021", "Car", 56, petrolDispenserQueue2), new Customer("0022", "Other", 45, petrolDispenserQueue2), new Customer("0023", "Car", 35, petrolDispenserQueue2)
-                , new Customer("0024", "Other", 78, petrolDispenserQueue2), new Customer("0025", "Car", 69, petrolDispenserQueue2), new Customer("0026", "Van", 60, petrolDispenserQueue2),
-                new Customer("0026", "Van", 17, petrolDispenserQueue2), new Customer("0028", "Car", 68, petrolDispenserQueue2), new Customer("0029", "Car", 89, petrolDispenserQueue2), new Customer("0030", "Car", 27, petrolDispenserQueue2));
+        petrolDispenserQueue1.setListOfCustomers(PetrolDisp1Customers);
+        petrolDispenserQueue2.setListOfCustomers(PetrolDisp2Customers);
+        petrolDispenserQueue3.setListOfCustomers(PetrolDisp3Customers);
+        petrolDispenserQueue4.setListOfCustomers(PetrolDisp4Customers);
 
-
-        petrolDispenserQueue1.setListOfCustomers(new ArrayList<>(petrolDispenserQueue1CustomersList));
-        petrolDispenserQueue2.setListOfCustomers(new ArrayList<>(petrolDispenserQueue2CustomersList));
+        dieselDispenserQueue1.setListOfCustomers(DieselDisp1Customers);
+        dieselDispenserQueue2.setListOfCustomers(DieselDisp2Customers);
+        dieselDispenserQueue3.setListOfCustomers(DieselDisp3Customers);
 
         //Getting customer details and creating a customer object
         System.out.println("\n Welcome to Gas and Service Station Colombo\n");
