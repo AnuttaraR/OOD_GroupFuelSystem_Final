@@ -82,7 +82,8 @@ public class Customer {
         this.fuelAmount = fuelAmount;
     }
 
-    public static void readDataFromDispenserTable(String table, ArrayList<Customer> customerList){ //This is to read from Tables that has Customer information of each Dispenser
+    //This is to read from Tables that has Customer information of each Dispenser
+    public static void readDataFromDispenserTable(String table, ArrayList<Customer> customerList){
         String url = "jdbc:mysql://localhost:3306/gasstation_cw";
 
         String displayDataTable = "SELECT * FROM " + table;
@@ -99,6 +100,5 @@ public class Customer {
             System.out.println("Error!");
 
         }
-
     }
 }

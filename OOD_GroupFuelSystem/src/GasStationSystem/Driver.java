@@ -1,7 +1,5 @@
 package GasStationSystem;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.*;
 
 import static java.lang.System.exit;
@@ -46,19 +44,31 @@ public class Driver {
 
         //Creating dispenser objects
         PetrolDispenseManager petrolDispenser1 = new PetrolDispenseManager();
+        petrolDispenser1.setRepository(petrolRepository);
         PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_1", petrolDispenser1);
+
         PetrolDispenseManager petrolDispenser2 = new PetrolDispenseManager();
+        petrolDispenser2.setRepository(petrolRepository);
         PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_2", petrolDispenser2);
+
         PetrolDispenseManager petrolDispenser3 = new PetrolDispenseManager();
+        petrolDispenser3.setRepository(petrolRepository);
         PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_3", petrolDispenser3);
+
         PetrolDispenseManager petrolDispenser4 = new PetrolDispenseManager();
+        petrolDispenser4.setRepository(petrolRepository);
         PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_4", petrolDispenser4);
 
         DieselDispenseManager dieselDispenser1 = new DieselDispenseManager();
+        dieselDispenser1.setRepository(dieselRepository);
         DieselDispenseManager.readDataFromDieselDispenserTables("dieseldispenser_1", dieselDispenser1);
+
         DieselDispenseManager dieselDispenser2 = new DieselDispenseManager();
+        dieselDispenser2.setRepository(dieselRepository);
         DieselDispenseManager.readDataFromDieselDispenserTables("dieseldispenser_1", dieselDispenser2);
+
         DieselDispenseManager dieselDispenser3 = new DieselDispenseManager();
+        dieselDispenser3.setRepository(dieselRepository);
         DieselDispenseManager.readDataFromDieselDispenserTables("dieseldispenser_1", dieselDispenser3);
 
         //Creating queue objects
