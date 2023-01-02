@@ -3,7 +3,7 @@ package GasStationSystem;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class GasStationOwner {
+public class GasStationOwner implements Runnable{
 
     //Attributes
     private double totalDieselIncome;
@@ -99,6 +99,12 @@ public class GasStationOwner {
         }
     }
 
+    public void run(){
+        System.out.println("\nTotal Income of the Gas Station Per Fuel Type\n");
+        displayTotalIncome();
+        System.out.println("\nDisplaying vehicle received the largest amount of fuel for the day and type of fuel received\n");
+        displayingVehicleWithLargestFuelDispensed();
+    }
 
     //Getters and setters
     public ArrayList<DieselDispenseManager> getListOfDieselDispensers() {

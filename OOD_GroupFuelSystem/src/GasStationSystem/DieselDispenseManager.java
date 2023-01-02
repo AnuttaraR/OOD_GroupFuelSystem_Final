@@ -3,7 +3,7 @@ package GasStationSystem;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DieselDispenseManager implements FuelDispenserManager{
+public class DieselDispenseManager implements FuelDispenserManager, Runnable{
 
     //Attributes
     private boolean isDispensing = true;
@@ -170,6 +170,10 @@ public class DieselDispenseManager implements FuelDispenserManager{
         if (repository.getAmountInRepository()<=500){
             isDispensing = false;
         }
+    }
+
+    public void run(){
+        displayingTotalFuelServedPerVehicleType();
     }
 
     //getters and setters

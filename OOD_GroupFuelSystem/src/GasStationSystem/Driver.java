@@ -46,36 +46,43 @@ public class Driver {
 
         //Creating dispenser objects
         PetrolDispenseManager petrolDispenser1 = new PetrolDispenseManager();
+        Thread pd1 = new Thread(petrolDispenser1);
         petrolDispenser1.setRepository(petrolRepository);
         PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_1", petrolDispenser1);
         petrolDispenser1.setListOfCustomers(PetrolDisp1Customers);
 
         PetrolDispenseManager petrolDispenser2 = new PetrolDispenseManager();
+        Thread pd2 = new Thread(petrolDispenser2);
         petrolDispenser2.setRepository(petrolRepository);
         PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_2", petrolDispenser2);
         petrolDispenser2.setListOfCustomers(PetrolDisp2Customers);
 
         PetrolDispenseManager petrolDispenser3 = new PetrolDispenseManager();
+        Thread pd3 = new Thread(petrolDispenser3);
         petrolDispenser3.setRepository(petrolRepository);
         PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_3", petrolDispenser3);
         petrolDispenser3.setListOfCustomers(PetrolDisp3Customers);
 
         PetrolDispenseManager petrolDispenser4 = new PetrolDispenseManager();
+        Thread pd4 = new Thread(petrolDispenser4);
         petrolDispenser4.setRepository(petrolRepository);
         PetrolDispenseManager.readDataFromPetrolDispenserTables("petroldispenser_4", petrolDispenser4);
         petrolDispenser4.setListOfCustomers(PetrolDisp4Customers);
 
         DieselDispenseManager dieselDispenser1 = new DieselDispenseManager();
+        Thread dd1 = new Thread(dieselDispenser1);
         dieselDispenser1.setRepository(dieselRepository);
         DieselDispenseManager.readDataFromDieselDispenserTables("dieseldispenser_1", dieselDispenser1);
         dieselDispenser1.setListOfCustomers(DieselDisp1Customers);
 
         DieselDispenseManager dieselDispenser2 = new DieselDispenseManager();
+        Thread dd2 = new Thread(dieselDispenser2);
         dieselDispenser2.setRepository(dieselRepository);
         DieselDispenseManager.readDataFromDieselDispenserTables("dieseldispenser_1", dieselDispenser2);
         dieselDispenser2.setListOfCustomers(DieselDisp2Customers);
 
         DieselDispenseManager dieselDispenser3 = new DieselDispenseManager();
+        Thread dd3 = new Thread(dieselDispenser3);
         dieselDispenser3.setRepository(dieselRepository);
         DieselDispenseManager.readDataFromDieselDispenserTables("dieseldispenser_1", dieselDispenser3);
         dieselDispenser3.setListOfCustomers(DieselDisp3Customers);
@@ -111,7 +118,7 @@ public class Driver {
 
         //Creating the Gas Station
         GasStationOwner gasStationOwner = new GasStationOwner(dieselDispenseManagerArrayList, petrolDispenseManagerArrayList, today);
-
+        Thread o1 = new Thread(gasStationOwner);
 
         //Assigning the existing customers to dispensers
         petrolDispenser1.setListOfCustomers(PetrolDisp1Customers);
@@ -636,20 +643,27 @@ public class Driver {
         DieselDispenseManager.updateDispenserTables(dieselDispenser3, "dieseldispenser_3");
 
 
+
+
         //Printing the statistics
         System.out.println("\n-------------------------PRINTING THE STATISTICS-------------------------");
 
         // Total income of the gas station per day per fuel type
-        System.out.println("\nTotal Income of the Gas Station Per Fuel Type\n");
-        gasStationOwner.displayTotalIncome();
+        //gasStationOwner.displayTotalIncome();
+
+        //CALLING GAS STATION OWNER
+        // Starting the gas station thread
+        o1.start();
+        try{
+            Thread.sleep(4000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
 
         // Displaying the Remaining stock at close of each repository
         System.out.println("\n--Remaining Stock Per Fuel Type--");
         System.out.println("Petrol Repository: "+petrolRepository.displayingRemainingStock());
         System.out.println("Diesel Repository: "+dieselRepository.displayingRemainingStock());
-
-        // Displaying vehicle received the largest amount of fuel for the day and type of fuel received
-        gasStationOwner.displayingVehicleWithLargestFuelDispensed();
 
         // The total fuel dispensed per vehicle category per fuel type
         System.out.println("\nThe total fuel dispensed per vehicle category per fuel type");
@@ -674,31 +688,73 @@ public class Driver {
         System.out.println("\n----------------------DISPENSER STATISTICS----------------------------");
         System.out.println("\nPetrol Dispenser 1: \n");
         PetrolDispenseManager.displayingTotalIncome(petrolDispenser1, "petroldispenser_1");
-        petrolDispenser1.displayingTotalFuelServedPerVehicleType();
+        //petrolDispenser1.displayingTotalFuelServedPerVehicleType();
+        pd1.start();
+        try{
+            Thread.sleep(2000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
 
         System.out.println("\nPetrol Dispenser 2: ");
         PetrolDispenseManager.displayingTotalIncome(petrolDispenser2, "petroldispenser_2");
-        petrolDispenser2.displayingTotalFuelServedPerVehicleType();
+        //petrolDispenser2.displayingTotalFuelServedPerVehicleType();
+        pd2.start();
+        try{
+            Thread.sleep(2000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
 
         System.out.println("\nPetrol Dispenser 3: ");
         PetrolDispenseManager.displayingTotalIncome(petrolDispenser3, "petroldispenser_3");
-        petrolDispenser3.displayingTotalFuelServedPerVehicleType();
+        //petrolDispenser3.displayingTotalFuelServedPerVehicleType();
+        pd3.start();
+        try{
+            Thread.sleep(2000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
 
         System.out.println("\nPetrol Dispenser 4: ");
         PetrolDispenseManager.displayingTotalIncome(petrolDispenser4, "petroldispenser_4");
-        petrolDispenser4.displayingTotalFuelServedPerVehicleType();
+        //petrolDispenser4.displayingTotalFuelServedPerVehicleType();
+        pd4.start();
+        try{
+            Thread.sleep(2000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
 
         System.out.println("\nDiesel Dispenser 1: ");
         DieselDispenseManager.displayingTotalIncome(dieselDispenser1, "dieseldispenser_1");
-        dieselDispenser1.displayingTotalFuelServedPerVehicleType();
+        //dieselDispenser1.displayingTotalFuelServedPerVehicleType();
+        dd1.start();
+        try{
+            Thread.sleep(2000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
 
         System.out.println("\nDiesel Dispenser 2: ");
         DieselDispenseManager.displayingTotalIncome(dieselDispenser2, "dieseldispenser_2");
-        dieselDispenser2.displayingTotalFuelServedPerVehicleType();
+        //dieselDispenser2.displayingTotalFuelServedPerVehicleType();
+        dd2.start();
+        try{
+            Thread.sleep(2000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
 
         System.out.println("\nDiesel Dispenser 3: ");
         DieselDispenseManager.displayingTotalIncome(dieselDispenser3, "dieseldispenser_3");
-        dieselDispenser3.displayingTotalFuelServedPerVehicleType();
+        //dieselDispenser3.displayingTotalFuelServedPerVehicleType();
+        dd3.start();
+        try{
+            Thread.sleep(2000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
 
 
 //        //total number of vehicles served by each dispenser along with the amounts of fuel
