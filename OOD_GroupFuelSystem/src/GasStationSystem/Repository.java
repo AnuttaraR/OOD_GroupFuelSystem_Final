@@ -22,10 +22,14 @@ public class Repository {
     public Repository() {
     }
 
+    //other methods
+
+    //This is to get the remaining fuel stock per fuel type
     public double displayingRemainingStock(){
        return amountInRepository;
     }
-    //other methods
+
+    //this is to get fuel dispensed per vehicle type per fuel type
     public static void checkFuelDispensedPerVehicleCatergory(ArrayList<Customer> listOfCustomers){
         //initializing total fuel served per vehicle category
         double totalFuelServedForCars = 0, totalFuelServedForVans =0, totalFuelServedForBikes=0, totalFuelServedForWheels=0, totalFuelServedForPublicTransportation=0, totalFuelServedForOthers= 0;
@@ -56,7 +60,7 @@ public class Repository {
 
     }
 
-    //This is to read from Tables that has Dispenser Data
+    //This is to read from Tables that has repository Data
     public static void readDataFromRepositoryTables(String table, Repository repository) {
         String url = "jdbc:mysql://localhost:3306/gasstation_cw";
 

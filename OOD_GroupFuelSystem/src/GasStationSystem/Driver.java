@@ -185,7 +185,7 @@ public class Driver {
 
 
             System.out.println("\nYou can join these queues");
-//      if the 1st queue, customer can join has available positions then he must join that queue
+            //If the 1st queue, customer can join has available positions then he must join that queue
             if (vehicleType == 1 || vehicleType == 2) {
                 if (petrolDispenserQueue1.getListOfCustomers().size() >= 10) {
                     if (petrolDispenserQueue2.getListOfCustomers().size() >= 10) {
@@ -195,14 +195,12 @@ public class Driver {
                             int ans = sc.nextInt();
                             if (ans == 1) {
                                 Customer.joinQueue(commonQueue, customer);
-//                                commonQueue.addCustomer(customer);
                                 customer.setQueue(commonQueue);
                                 commonQueue.setNoOfCustomers(commonCustomers + 1);
                                 System.out.println("\nSuccessfully joined the common queue, thanks for your patience.");
 
-//                            Assigning the common queue customer to a normal queue
+                               //Assigning the common queue customer to a normal queue
                                 Queue.moveUpQueue(petrolDispenserQueue2.getListOfCustomers());
-//                                petrolDispenserQueue2.getListOfCustomers().add(customer);
                                 Customer.joinQueue(petrolDispenserQueue2, customer);
                                 petrolDispenser2.addCustomer(customer);
                                 customer.setQueue(petrolDispenserQueue2);
@@ -227,7 +225,6 @@ public class Driver {
                             if (ans == 1) {
                                 petrolDispenser2.addCustomer(customer);
                                 Customer.joinQueue(petrolDispenserQueue2, customer);
-//                                petrolDispenserQueue2.addCustomer(customer);
                                 customer.setQueue(petrolDispenserQueue2);
                                 System.out.println("\nSuccessfully joined the queue.");
                                 int ticketNo = random.nextInt(1, 10000);
@@ -250,12 +247,11 @@ public class Driver {
                         if (ans == 1) {
                             Customer.joinQueue(petrolDispenserQueue1, customer);
                             petrolDispenser1.addCustomer(customer);
-//                            petrolDispenserQueue1.addCustomer(customer);
                             customer.setQueue(petrolDispenserQueue1);
                             System.out.println("\nSuccessfully joined the queue.");
                             int ticketNo = random.nextInt(1, 10000);
                             customer.setTicketId(ticketNo);
-                            System.out.println("\nYour ticket Id is " + ticketNo); //pass the ticket id
+                            System.out.println("\nYour ticket Id is " + ticketNo);
                         } else if (ans == 2) {
                             System.out.println("\nThank you for using the fuel system, you may leave the queue now.");
                             System.out.println("\nNext customer please");
@@ -266,7 +262,6 @@ public class Driver {
                     }
                 }
             } else if (vehicleType == 3) {
-//            System.out.println("Petrol Queue 4 available number of positions: "+Queue.displayAvailablePositions(petrolDispenserQueue4));
                 if (petrolDispenserQueue4.getListOfCustomers().size() >= 10) {
                     System.out.println("\nOops! There are no available positions in respective queues. Please join the common queue");
                     System.out.println("\nWould you like to join the common queue? 1:Yes, 2:No\n");
@@ -275,7 +270,6 @@ public class Driver {
                         if (ans == 1) {
                             Customer.joinQueue(commonQueue, customer);
                             commonQueue.addCustomer(customer);
-//                            customer.setQueue(commonQueue);
                             commonQueue.setNoOfCustomers(commonCustomers + 1);
                             System.out.println("\nSuccessfully joined the common queue, thanks for your patience.");
                             System.out.println("\nNext customer please");
@@ -306,7 +300,6 @@ public class Driver {
                         if (ans == 1) {
                             petrolDispenser4.addCustomer(customer);
                             Customer.joinQueue(petrolDispenserQueue4, customer);
-//                            petrolDispenserQueue4.addCustomer(customer);
                             customer.setQueue(petrolDispenserQueue4);
                             System.out.println("\nSuccessfully joined the queue.");
                             int ticketNo = random.nextInt(1, 10000);
@@ -322,7 +315,6 @@ public class Driver {
                     }
                 }
             } else if (vehicleType == 4) {
-//            System.out.println("Petrol Queue 3 available number of positions: "+Queue.displayAvailablePositions(petrolDispenserQueue3));
                 if (petrolDispenserQueue3.getListOfCustomers().size() >= 10) {
                     System.out.println("\nOops! There are no available positions in respective queues. Please join the common queue");
                     System.out.println("\nWould you like to join the common queue? 1:Yes, 2:No\n");
@@ -330,7 +322,6 @@ public class Driver {
                         int ans = sc.nextInt();
                         if (ans == 1) {
                             Customer.joinQueue(commonQueue, customer);
-//                            commonQueue.addCustomer(customer);
                             customer.setQueue(commonQueue);
                             commonQueue.setNoOfCustomers(commonCustomers + 1);
                             System.out.println("\nSuccessfully joined the common queue, thanks for your patience.");
@@ -338,7 +329,6 @@ public class Driver {
                             //Assigning the common queue customer to a normal queue
                             Queue.moveUpQueue(petrolDispenserQueue3.getListOfCustomers());
                             Customer.joinQueue(petrolDispenserQueue3, customer);
-//                            petrolDispenserQueue3.getListOfCustomers().add(customer);
                             petrolDispenser3.addCustomer(customer);
                             customer.setQueue(petrolDispenserQueue3);
                             System.out.println("\nSuccessfully joined the petrol queue 3.");
@@ -361,7 +351,6 @@ public class Driver {
                         int ans = sc.nextInt();
                         if (ans == 1) {
                             Customer.joinQueue(petrolDispenserQueue3, customer);
-//                            petrolDispenser3.addCustomer(customer);
                             petrolDispenserQueue3.addCustomer(customer);
                             customer.setQueue(petrolDispenserQueue3);
                             System.out.println("\nSuccessfully joined the queue.");
@@ -378,7 +367,6 @@ public class Driver {
                     }
                 }
             } else if (vehicleType == 5) {
-//            System.out.println("Diesel Queue 1 available number of position: "+Queue.displayAvailablePositions(dieselDispenserQueue1));
                 if (dieselDispenserQueue1.getListOfCustomers().size() >= 10) {
                     System.out.println("\nOops! There are no available positions in respective queues. Please join the common queue");
                     System.out.println("\nWould you like to join the common queue? 1:Yes, 2:No\n");
@@ -393,7 +381,6 @@ public class Driver {
                             //Assigning the common queue customer to a normal queue
                             Queue.moveUpQueue(dieselDispenserQueue1.getListOfCustomers());
                             Customer.joinQueue(dieselDispenserQueue1, customer);
-//                            dieselDispenserQueue1.getListOfCustomers().add(customer);
                             dieselDispenser1.addCustomer(customer);
                             customer.setQueue(dieselDispenserQueue1);
                             System.out.println("\nSuccessfully joined the diesel queue 1.");
@@ -417,7 +404,6 @@ public class Driver {
                         if (ans == 1) {
                             dieselDispenser1.addCustomer(customer);
                             Customer.joinQueue(dieselDispenserQueue1, customer);
-//                            dieselDispenserQueue1.addCustomer(customer);
                             customer.setQueue(dieselDispenserQueue1);
                             System.out.println("\nSuccessfully joined the queue.");
                             int ticketNo = random.nextInt(1, 2000);
@@ -436,14 +422,12 @@ public class Driver {
                 System.out.println("\nPlease input fuel type \n1.Petrol  2.Diesel");
                 int fuelType = sc.nextInt();
                 if (fuelType == 1) {
-//                System.out.println("Petrol Queue 2 available number of positions: "+Queue.displayAvailablePositions(petrolDispenserQueue2));
                     if (petrolDispenserQueue2.getListOfCustomers().size() >= 10) {
                         System.out.println("\nOops! There are no available positions in respective queues. Please join the common queue");
                         System.out.println("\nWould you like to join the common queue? 1:Yes, 2:No\n");
                         try {
                             int ans = sc.nextInt();
                             if (ans == 1) {
-//                                commonQueue.addCustomer(customer);
                                 Customer.joinQueue(commonQueue, customer);
                                 customer.setQueue(commonQueue);
                                 commonQueue.setNoOfCustomers(commonCustomers + 1);
@@ -451,7 +435,6 @@ public class Driver {
 
                                 //Assigning the common queue customer to a normal queue
                                 Queue.moveUpQueue(petrolDispenserQueue2.getListOfCustomers());
-//                                petrolDispenserQueue2.getListOfCustomers().add(customer);
                                 Customer.joinQueue(petrolDispenserQueue2, customer);
                                 petrolDispenser2.addCustomer(customer);
                                 customer.setQueue(petrolDispenserQueue2);
@@ -476,7 +459,6 @@ public class Driver {
                             if (ans == 1) {
                                 petrolDispenser2.addCustomer(customer);
                                 Customer.joinQueue(petrolDispenserQueue2, customer);
-//                                petrolDispenserQueue2.addCustomer(customer);
                                 customer.setQueue(petrolDispenserQueue2);
                                 System.out.println("\nSuccessfully joined the queue.");
                                 int ticketNo = random.nextInt(1, 50000);
@@ -492,8 +474,6 @@ public class Driver {
                         }
                     }
                 } else if (vehicleType == 6) {
-//                System.out.println("Diesel Queue 2 available number of position: " + Queue.displayAvailablePositions(dieselDispenserQueue2));
-//                System.out.println("Diesel Queue 3 available number of position: " + Queue.displayAvailablePositions(dieselDispenserQueue3));
                     if (dieselDispenserQueue2.getListOfCustomers().size() >= 10) {
                         if (dieselDispenserQueue3.getListOfCustomers().size() >= 10) {
                             System.out.println("\nOops! There are no available positions in respective queues. Please join the common queue");
@@ -501,7 +481,6 @@ public class Driver {
                             try {
                                 int ans = sc.nextInt();
                                 if (ans == 1) {
-//                                    commonQueue.addCustomer(customer);
                                     Customer.joinQueue(commonQueue, customer);
                                     customer.setQueue(commonQueue);
                                     commonQueue.setNoOfCustomers(commonCustomers + 1);
@@ -509,7 +488,6 @@ public class Driver {
 
                                     //Assigning the common queue customer to a normal queue
                                     dieselDispenserQueue3.getListOfCustomers().remove(0);
-//                                    dieselDispenserQueue3.getListOfCustomers().add(customer);
                                     Customer.joinQueue(dieselDispenserQueue3, customer);
                                     dieselDispenser3.addCustomer(customer);
                                     customer.setQueue(dieselDispenserQueue3);
@@ -533,7 +511,6 @@ public class Driver {
                                 int ans = sc.nextInt();
                                 if (ans == 1) {
                                     dieselDispenser3.addCustomer(customer);
-//                                    dieselDispenserQueue3.addCustomer(customer);
                                     Customer.joinQueue(dieselDispenserQueue3, customer);
                                     customer.setQueue(dieselDispenserQueue3);
                                     System.out.println("\nSuccessfully joined the queue.");
@@ -557,7 +534,6 @@ public class Driver {
                             if (ans == 1) {
                                 dieselDispenser2.addCustomer(customer);
                                 Customer.joinQueue(dieselDispenserQueue2, customer);
-//                                dieselDispenserQueue2.addCustomer(customer);
                                 customer.setQueue(dieselDispenserQueue2);
                                 System.out.println("\nSuccessfully joined the queue.");
                                 int ticketNo = random.nextInt(1, 100);
@@ -587,7 +563,7 @@ public class Driver {
                 }
             }
 
-//        Issuing fuel
+            //Issuing fuel
             customer.setFuelAmount(fuelAmount);
             if (customer.getQueue() == petrolDispenserQueue1) {
                 Customer.updateCustomerLists(customer, "petrol_dispenser_1_customers");
@@ -642,14 +618,8 @@ public class Driver {
         DieselDispenseManager.updateDispenserTables(dieselDispenser2, "dieseldispenser_2");
         DieselDispenseManager.updateDispenserTables(dieselDispenser3, "dieseldispenser_3");
 
-
-
-
         //Printing the statistics
         System.out.println("\n-------------------------PRINTING THE STATISTICS-------------------------");
-
-        // Total income of the gas station per day per fuel type
-        //gasStationOwner.displayTotalIncome();
 
         //CALLING GAS STATION OWNER
         // Starting the gas station thread
@@ -688,7 +658,7 @@ public class Driver {
         System.out.println("\n----------------------DISPENSER STATISTICS----------------------------");
         System.out.println("\nPetrol Dispenser 1: \n");
         PetrolDispenseManager.displayingTotalIncome(petrolDispenser1, "petroldispenser_1");
-        //petrolDispenser1.displayingTotalFuelServedPerVehicleType();
+
         pd1.start();
         try{
             Thread.sleep(2000);
@@ -698,7 +668,7 @@ public class Driver {
 
         System.out.println("\nPetrol Dispenser 2: ");
         PetrolDispenseManager.displayingTotalIncome(petrolDispenser2, "petroldispenser_2");
-        //petrolDispenser2.displayingTotalFuelServedPerVehicleType();
+
         pd2.start();
         try{
             Thread.sleep(2000);
@@ -708,7 +678,7 @@ public class Driver {
 
         System.out.println("\nPetrol Dispenser 3: ");
         PetrolDispenseManager.displayingTotalIncome(petrolDispenser3, "petroldispenser_3");
-        //petrolDispenser3.displayingTotalFuelServedPerVehicleType();
+
         pd3.start();
         try{
             Thread.sleep(2000);
@@ -718,7 +688,7 @@ public class Driver {
 
         System.out.println("\nPetrol Dispenser 4: ");
         PetrolDispenseManager.displayingTotalIncome(petrolDispenser4, "petroldispenser_4");
-        //petrolDispenser4.displayingTotalFuelServedPerVehicleType();
+
         pd4.start();
         try{
             Thread.sleep(2000);
@@ -728,7 +698,7 @@ public class Driver {
 
         System.out.println("\nDiesel Dispenser 1: ");
         DieselDispenseManager.displayingTotalIncome(dieselDispenser1, "dieseldispenser_1");
-        //dieselDispenser1.displayingTotalFuelServedPerVehicleType();
+
         dd1.start();
         try{
             Thread.sleep(2000);
@@ -738,7 +708,7 @@ public class Driver {
 
         System.out.println("\nDiesel Dispenser 2: ");
         DieselDispenseManager.displayingTotalIncome(dieselDispenser2, "dieseldispenser_2");
-        //dieselDispenser2.displayingTotalFuelServedPerVehicleType();
+
         dd2.start();
         try{
             Thread.sleep(2000);
@@ -748,35 +718,13 @@ public class Driver {
 
         System.out.println("\nDiesel Dispenser 3: ");
         DieselDispenseManager.displayingTotalIncome(dieselDispenser3, "dieseldispenser_3");
-        //dieselDispenser3.displayingTotalFuelServedPerVehicleType();
+
         dd3.start();
         try{
             Thread.sleep(2000);
         } catch (InterruptedException e){
             e.printStackTrace();
         }
-
-
-//        //total number of vehicles served by each dispenser along with the amounts of fuel
-//        System.out.println("\nPetrol dispenser 1: ");
-//        petrolDispenser1.displayingTotalFuelServedPerVehicleType();
-//
-//        System.out.println("\nPetrol dispenser 2: ");
-//        petrolDispenser2.displayingTotalFuelServedPerVehicleType();
-//
-//        System.out.println("\nPetrol dispenser 3: ");
-//        petrolDispenser3.displayingTotalFuelServedPerVehicleType();
-//
-//        System.out.println("\nPetrol dispenser 4: ");
-//        petrolDispenser4.displayingTotalFuelServedPerVehicleType();
-//
-//        System.out.println("\nDiesel dispenser 1: ");
-//        dieselDispenser1.displayingTotalFuelServedPerVehicleType();
-//
-//        System.out.println("\nDiesel dispenser 2: ");
-//        dieselDispenser2.displayingTotalFuelServedPerVehicleType();
-//        System.out.println("\nDiesel dispenser 3: ");
-//        dieselDispenser3.displayingTotalFuelServedPerVehicleType();
 
     }
 

@@ -34,7 +34,7 @@ public class Customer {
 
     //Other methods
 
-    //This is to read from Tables that has Customer information of each Dispenser
+    //This is to read from Tables that has Customer information of each Dispenser from database
     public static void readDataFromCustomerTable(String table, ArrayList<Customer> customerList){
         String url = "jdbc:mysql://localhost:3306/gasstation_cw";
 
@@ -53,6 +53,7 @@ public class Customer {
         }
     }
 
+    //This is to update customer lists of each dispenser to database
     public static void updateCustomerLists(Customer customer, String table){
         String url = "jdbc:mysql://localhost:3306/gasstation_cw";
 
@@ -70,7 +71,8 @@ public class Customer {
         }
 
     }
-    //Adding a customer to queue
+
+    //This is to customer to join the queue
     public static void joinQueue(Queue queue, Customer customer){
         queue.addCustomer(customer);
     }
@@ -115,6 +117,5 @@ public class Customer {
     public void setFuelAmount(double fuelAmount) {
         this.fuelAmount = fuelAmount;
     }
-
 
 }

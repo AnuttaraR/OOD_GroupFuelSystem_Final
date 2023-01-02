@@ -40,20 +40,17 @@ public class GasStationOwner implements Runnable{
         totalDieselIncome = totalDieselDispensedAmount*DieselDispenseManager.getPriceForLitre();
         totalPetrolIncome = totalPetrolDispensedAmount*PetrolDispenseManager.getPriceForLitre();
 
+
+        //Updating the gas station table in database
         String url = "jdbc:mysql://localhost:3306/gasstation_cw";
 
         try {
             Connection connection = DriverManager.getConnection(url, "root", "");
             Statement statement = connection.createStatement();
-            String query = "UPDATE gas_station"+
-                    " SET totalDieselIncome = "+ getTotalDieselIncome()+", totalDieselDispensedAmount = " +getTotalDieselDispensedAmount()+
-                    " ,totalPetrolIncome = "+ getTotalPetrolIncome()+", totalPetrolDispensedAmount= " +getTotalPetrolDispensedAmount()+";"+
-                    "WHERE date= "+getDate().getDay()+" AND month= "+getDate().getMonth()+";";
+            String query = "UPDATE `gas_station` SET `totalDieselIncome`  = "+ getTotalDieselIncome()+",`totalDieselDispensedAmount`  = " +getTotalDieselDispensedAmount()+
+                    " , `totalPetrolIncome` = "+ getTotalPetrolIncome()+", `totalPetrolDispensedAmount` = " +getTotalPetrolDispensedAmount()+
+                    " WHERE date= "+getDate().getDay()+" AND month= "+getDate().getMonth()+";";
             PreparedStatement newStatement = connection.prepareStatement(query);
-            newStatement.setDouble(1, totalPetrolIncome);
-            newStatement.setDouble(2, totalPetrolDispensedAmount);
-            newStatement.setDouble(3, totalDieselIncome);
-            newStatement.setDouble(4, totalDieselDispensedAmount);
             newStatement.execute();
         } catch (Exception e) {
             System.out.println("Error!");
@@ -64,6 +61,7 @@ public class GasStationOwner implements Runnable{
         System.out.println("The total diesel fuel dispensed: "+getTotalDieselDispensedAmount());
     }
 
+    //this is to display vehicle with the largest fuel dispensed per day
     public void displayingVehicleWithLargestFuelDispensed(){
         //Initializing the customer and fuel amount variables with the largest fuel amounts
         Customer customerWithLargestDieselDispensed = null, customerWithLargestPetrolDispensed = null;
@@ -99,6 +97,7 @@ public class GasStationOwner implements Runnable{
         }
     }
 
+    //Multithreading method
     public void run(){
         System.out.println("\nTotal Income of the Gas Station Per Fuel Type\n");
         displayTotalIncome();

@@ -37,7 +37,7 @@ public class DieselDispenseManager implements FuelDispenserManager, Runnable{
 
     public DieselDispenseManager(){}
 
-    //This is to read from Tables that has Dispenser Data
+    //This is to read from Tables that has Dispenser data
     public static void readDataFromDieselDispenserTables(String table, DieselDispenseManager dispenser) {
         String url = "jdbc:mysql://localhost:3306/gasstation_cw";
 
@@ -58,6 +58,7 @@ public class DieselDispenseManager implements FuelDispenserManager, Runnable{
         }
     }
 
+    //This is to update the dispenser information to database
     public static void updateDispenserTables(DieselDispenseManager dispenser, String table){
         String url = "jdbc:mysql://localhost:3306/gasstation_cw";
         try {
@@ -73,6 +74,7 @@ public class DieselDispenseManager implements FuelDispenserManager, Runnable{
         }
     }
 
+    //this is to display the total fuel served per vehicle type
     public void displayingTotalFuelServedPerVehicleType(){
 
         //initializing number of vehicles per category
@@ -113,9 +115,8 @@ public class DieselDispenseManager implements FuelDispenserManager, Runnable{
         System.out.println("Other category : Total Fuel: "+totalFuelServedForOthers+" Total number of Other category: "+totalOthers);
     }
 
-    //Displaying the total income per dispenser per day
+    //Displaying the total income per dispenser per day by reading data from the database
     public static void displayingTotalIncome(DieselDispenseManager dispenser, String table){
-
 
         String url = "jdbc:mysql://localhost:3306/gasstation_cw";
 
@@ -172,6 +173,7 @@ public class DieselDispenseManager implements FuelDispenserManager, Runnable{
         }
     }
 
+    //multithreading method
     public void run(){
         displayingTotalFuelServedPerVehicleType();
     }

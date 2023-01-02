@@ -59,6 +59,8 @@ public class PetrolDispenseManager implements FuelDispenserManager, Runnable{
             System.out.println("Error!");
         }
     }
+
+    //This is to update the dispenser information to database
     public static void updateDispenserTables(PetrolDispenseManager dispenser, String table){
         String url = "jdbc:mysql://localhost:3306/gasstation_cw";
         try {
@@ -66,7 +68,7 @@ public class PetrolDispenseManager implements FuelDispenserManager, Runnable{
             Statement statement = connection.createStatement();
             String query = "UPDATE " + table+
                     " SET income = "+dispenser.getIncome()+", amountDispensed = " + dispenser.getAmountDispensed()+
-                    "WHERE date= "+dispenser.getDate().getDay()+" AND month= "+dispenser.getDate().getMonth()+";";
+                    " WHERE date= "+dispenser.getDate().getDay()+" AND month= "+dispenser.getDate().getMonth()+";";
             PreparedStatement newStatement = connection.prepareStatement(query);
             newStatement.execute();
 
@@ -76,6 +78,7 @@ public class PetrolDispenseManager implements FuelDispenserManager, Runnable{
         }
     }
 
+    //this is to display the total fuel served per vehicle type
     public void displayingTotalFuelServedPerVehicleType(){
 
         //initializing number of vehicles per category
@@ -116,11 +119,8 @@ public class PetrolDispenseManager implements FuelDispenserManager, Runnable{
         System.out.println("Other category : Total Fuel: "+totalFuelServedForOthers+" Total number of cars: "+totalOthers);
     }
 
-    //Displaying the total income per dispenser per day
+    //Displaying the total income per dispenser per day by reading data from the database
     public static void displayingTotalIncome(PetrolDispenseManager dispenser, String table){
-//        income = income+this.amountDispensed*priceForLitre;
-        //System.out.println("Total income of this dispenser on "+date.toString()+" : LKR"+income);
-//        return income;
 
         String url = "jdbc:mysql://localhost:3306/gasstation_cw";
 
@@ -177,6 +177,7 @@ public class PetrolDispenseManager implements FuelDispenserManager, Runnable{
         }
     }
 
+    //multithreading method
     public void run(){
         displayingTotalFuelServedPerVehicleType();
     }

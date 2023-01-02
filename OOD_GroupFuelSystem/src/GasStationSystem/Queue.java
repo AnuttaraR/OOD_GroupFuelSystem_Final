@@ -38,7 +38,6 @@ public class Queue {
         return listOfCustomers;
     }
 
-
     //List manipulation methods
     public boolean addCustomer(Customer customer){
         return(listOfCustomers.add(customer));
