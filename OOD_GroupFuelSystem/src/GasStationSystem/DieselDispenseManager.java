@@ -74,6 +74,28 @@ public class DieselDispenseManager implements FuelDispenserManager, Runnable{
         }
     }
 
+    //Displaying the total income per dispenser per day by reading data from the database
+    public static void displayingTotalIncome(DieselDispenseManager dispenser, String table){
+
+        String url = "jdbc:mysql://localhost:3306/gasstation_cw";
+
+        String displayDataTable = "SELECT * FROM " + table;
+        try {
+            Connection connection = DriverManager.getConnection(url, "root", "");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(displayDataTable);
+
+            while (resultSet.next()) {
+                System.out.println("Date: "+resultSet.getInt("date")+"-"+resultSet.getInt("month")+"-"+resultSet.getInt("year"));
+                System.out.println("Dispenser Id: "+resultSet.getInt("dispenserId"));
+                System.out.println("Total fuel dispensed: "+resultSet.getDouble("amountDispensed"));
+                System.out.println("Total income: "+resultSet.getDouble("income"));
+            }
+        } catch (Exception e) {
+            System.out.println("Error!");
+        }
+    }
+
     //this is to display the total fuel served per vehicle type
     public void displayingTotalFuelServedPerVehicleType(){
 
@@ -115,30 +137,7 @@ public class DieselDispenseManager implements FuelDispenserManager, Runnable{
         System.out.println("Other category : Total Fuel: "+totalFuelServedForOthers+" Total number of Other category: "+totalOthers);
     }
 
-    //Displaying the total income per dispenser per day by reading data from the database
-    public static void displayingTotalIncome(DieselDispenseManager dispenser, String table){
-
-        String url = "jdbc:mysql://localhost:3306/gasstation_cw";
-
-        String displayDataTable = "SELECT * FROM " + table;
-        try {
-            Connection connection = DriverManager.getConnection(url, "root", "");
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(displayDataTable);
-
-            while (resultSet.next()) {
-                System.out.println("Date: "+resultSet.getInt("date")+"-"+resultSet.getInt("month")+"-"+resultSet.getInt("year"));
-                System.out.println("Dispenser Id: "+resultSet.getInt("dispenserId"));
-                System.out.println("Total fuel dispensed: "+resultSet.getDouble("amountDispensed"));
-                System.out.println("Total income: "+resultSet.getDouble("income"));
-            }
-        } catch (Exception e) {
-            System.out.println("Error!");
-        }
-    }
-
     //Overriding methods
-
     //Checking whether the repository capacity is greater than 500L and issuing fuel if not display fuel out of stock
     @Override
     public boolean dispenseFuel(double fuelAmount) {
@@ -155,7 +154,6 @@ public class DieselDispenseManager implements FuelDispenserManager, Runnable{
             return false;
         }
     }
-
     //Fuel restock if dispenser has stopped issuing fuel
     @Override
     public void restockFuel() {
@@ -164,7 +162,6 @@ public class DieselDispenseManager implements FuelDispenserManager, Runnable{
             System.out.println("Restocked diesel repository!");
         }
     }
-
     //Stop dispensing fuel if repository capacity is less than 500L
     @Override
     public void stopFuelDispense() {
@@ -172,6 +169,7 @@ public class DieselDispenseManager implements FuelDispenserManager, Runnable{
             isDispensing = false;
         }
     }
+
 
     //multithreading method
     public void run(){
