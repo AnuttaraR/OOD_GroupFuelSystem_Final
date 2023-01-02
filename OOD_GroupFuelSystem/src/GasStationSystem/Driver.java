@@ -118,7 +118,7 @@ public class Driver {
 
         //Creating the Gas Station
         GasStationOwner gasStationOwner = new GasStationOwner(dieselDispenseManagerArrayList, petrolDispenseManagerArrayList, today);
-        Thread o1 = new Thread(gasStationOwner);
+        Thread gs = new Thread(gasStationOwner);
 
         //Assigning the existing customers to dispensers
         petrolDispenser1.setListOfCustomers(PetrolDisp1Customers);
@@ -623,7 +623,7 @@ public class Driver {
 
         //CALLING GAS STATION OWNER
         // Starting the gas station thread
-        o1.start();
+        gs.start();
         try{
             Thread.sleep(4000);
         } catch (InterruptedException e){
